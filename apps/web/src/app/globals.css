@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+html, body {
+  background: theme(colors.paper.DEFAULT);
+  color: theme(colors.ink.DEFAULT);
+  font-family: theme(fontFamily.sans);
+}
+
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background: #0b0b0e;
+    color: #fafafa;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

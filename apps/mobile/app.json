@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "Encore",
+    "slug": "encore",
+    "version": "0.0.1",
+    "scheme": "encore",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0b0b0e"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "fm.encore.audio",
+      "infoPlist": {
+        "NSAppTransportSecurity": { "NSAllowsArbitraryLoads": false },
+        "UIBackgroundModes": ["audio"]
+      },
+      "entitlements": {
+        "com.apple.developer.carplay-audio": true
+      }
+    },
+    "android": {
+      "package": "fm.encore.audio",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#0b0b0e"
+      },
+      "permissions": [
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.WAKE_LOCK",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [{ "scheme": "encore" }],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store"
+    ],
+    "experiments": { "typedRoutes": true }
+  }
+}

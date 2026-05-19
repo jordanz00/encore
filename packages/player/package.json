@@ -1,0 +1,15 @@
+{
+  "name": "@encore/player",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'lint placeholder'",
+    "clean": "rm -rf dist .turbo"
+  },
+  "devDependencies": { "typescript": "^5.6.3" }
+}

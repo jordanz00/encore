@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ern:NewReleaseMessage xmlns:ern="http://ddex.net/xml/ern/43" MessageSchemaVersionId="ern/43">
+  <MessageHeader>
+    <MessageId>OPENCHORD-DEMO-DELIVERY-0001</MessageId>
+    <MessageSender>
+      <PartyId>PADPIDA2014020701U</PartyId>
+      <PartyName>
+        <FullName>Demo Distributor LLC</FullName>
+      </PartyName>
+    </MessageSender>
+    <MessageRecipient>
+      <PartyId>PADPIDA2026050601U</PartyId>
+      <PartyName>
+        <FullName>Encore</FullName>
+      </PartyName>
+    </MessageRecipient>
+    <MessageCreatedDateTime>2026-05-06T20:00:00Z</MessageCreatedDateTime>
+    <MessageControlType>LiveMessage</MessageControlType>
+  </MessageHeader>
+  <ResourceList>
+    <SoundRecording>
+      <ResourceReference>A1</ResourceReference>
+      <SoundRecordingType>MusicalWorkSoundRecording</SoundRecordingType>
+      <SoundRecordingId>
+        <ISRC>US7QQ2600001</ISRC>
+      </SoundRecordingId>
+      <ReferenceTitle>
+        <TitleText>First Light</TitleText>
+      </ReferenceTitle>
+      <Duration>PT3M27S</Duration>
+      <SoundRecordingDetailsByTerritory>
+        <TerritoryCode>Worldwide</TerritoryCode>
+        <Title>
+          <TitleText>First Light</TitleText>
+        </Title>
+        <DisplayArtist>
+          <PartyName>
+            <FullName>Aurora Nguyen</FullName>
+          </PartyName>
+        </DisplayArtist>
+        <Contributor>
+          <Role>MainArtist</Role>
+          <PartyName>
+            <FullName>Aurora Nguyen</FullName>
+          </PartyName>
+        </Contributor>
+        <Contributor>
+          <Role>Producer</Role>
+          <PartyName>
+            <FullName>Marcus Lee</FullName>
+          </PartyName>
+        </Contributor>
+      </SoundRecordingDetailsByTerritory>
+      <TechnicalDetails>
+        <DeliveryFile>
+          <URI>resources/A1.flac</URI>
+          <HashSum>
+            <HashSum>0123456789abcdef0123456789abcdef</HashSum>
+          </HashSum>
+        </DeliveryFile>
+      </TechnicalDetails>
+    </SoundRecording>
+    <Image>
+      <ResourceReference>I1</ResourceReference>
+      <ImageType>FrontCoverImage</ImageType>
+      <TechnicalDetails>
+        <DeliveryFile>
+          <URI>resources/cover.jpg</URI>
+        </DeliveryFile>
+      </TechnicalDetails>
+    </Image>
+  </ResourceList>
+  <ReleaseList>
+    <Release>
+      <ReleaseReference>R0</ReleaseReference>
+      <ReleaseId>
+        <ICPN>0000000000001</ICPN>
+      </ReleaseId>
+      <ReferenceTitle>
+        <TitleText>First Light</TitleText>
+      </ReferenceTitle>
+      <ReleaseResourceReferenceList>
+        <ReleaseResourceReference>A1</ReleaseResourceReference>
+      </ReleaseResourceReferenceList>
+      <ReleaseType>Single</ReleaseType>
+      <ReleaseDetailsByTerritory>
+        <TerritoryCode>Worldwide</TerritoryCode>
+        <DisplayArtist>
+          <PartyName>
+            <FullName>Aurora Nguyen</FullName>
+          </PartyName>
+        </DisplayArtist>
+        <LabelName>Demo Records</LabelName>
+        <Title>
+          <TitleText>First Light</TitleText>
+        </Title>
+        <Genre>
+          <GenreText>Electronic</GenreText>
+        </Genre>
+        <ReleaseDate>2026-05-15</ReleaseDate>
+        <PLine>
+          <PLineText>℗ 2026 Demo Records</PLineText>
+        </PLine>
+        <CLine>
+          <CLineText>© 2026 Aurora Nguyen</CLineText>
+        </CLine>
+      </ReleaseDetailsByTerritory>
+    </Release>
+  </ReleaseList>
+</ern:NewReleaseMessage>

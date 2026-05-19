@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Encore Player</title>
+  <meta name="description" content="Encore showcase player — local files, Artist Wallet demo." />
+  <meta name="theme-color" content="#0a0908" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@0,6..72,500;0,6..72,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="player.css" />
+  <link rel="stylesheet" href="apple-player.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="../landing.html" target="_top">Encore</a>
+      <div class="top-actions">
+        <button type="button" class="btn" id="btn-add">Add file</button>
+        <input type="file" id="file-input" accept="audio/*,.aiff,.aif,.mp3,.flac,.wav,.ogg,.m4a" multiple hidden />
+        <details class="top-more">
+          <summary class="btn btn-ghost" aria-label="More">···</summary>
+          <div class="top-more-menu">
+            <button type="button" class="top-more-item" id="btn-demo">Reload demo</button>
+          </div>
+        </details>
+      </div>
+    </header>
+
+    <main class="stage">
+      <div class="art-wrap">
+        <div class="art">
+          <img
+            class="art-img"
+            id="art-img"
+            src="demo/complicated-cover.png"
+            alt="Complicated — album art by Computer Machine"
+            width="400"
+            height="400"
+            decoding="async"
+          />
+        </div>
+      </div>
+
+      <div class="meta">
+        <p class="meta-eyebrow">Now playing</p>
+        <h1 class="meta-title" id="track-title">Complicated</h1>
+        <p class="meta-sub" id="track-sub">Computer Machine</p>
+      </div>
+
+      <div class="playback-stack">
+        <canvas
+          class="viz"
+          id="viz"
+          role="slider"
+          aria-label="Waveform — tap or drag to seek"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          tabindex="0"
+        ></canvas>
+        <div class="seek seek--thin" id="seek" aria-hidden="true">
+          <div class="seek-fill" id="seek-fill"></div>
+        </div>
+        <div class="seek-times">
+          <span id="time-cur">0:00</span>
+          <span id="time-dur">0:00</span>
+        </div>
+        <div class="transport">
+          <button type="button" class="tbtn" id="btn-prev" aria-label="Previous track">‹</button>
+          <button type="button" class="tbtn tbtn-play" id="btn-play" aria-label="Play">
+            <span class="icon-play" aria-hidden="true">▶</span>
+            <span class="icon-pause" hidden aria-hidden="true">❚❚</span>
+          </button>
+          <button type="button" class="tbtn" id="btn-next" aria-label="Next track">›</button>
+        </div>
+      </div>
+
+      <section class="artist-wallet" aria-label="Artist Wallet">
+        <div class="aw-head">
+          <div class="aw-artist">
+            <div class="aw-avatar" id="aw-avatar" aria-hidden="true"></div>
+            <div>
+              <p class="aw-eyebrow">Artist Wallet</p>
+              <h2 class="aw-name" id="aw-name">Computer Machine</h2>
+              <p class="aw-tag" id="aw-tag">Complicated · Encore demo</p>
+            </div>
+          </div>
+          <div class="aw-this">
+            <span class="aw-label">This play</span>
+            <span class="aw-amt" id="aw-this-play">+ $0.02</span>
+          </div>
+        </div>
+        <div class="aw-row">
+          <div>
+            <span class="aw-balance-lbl">Session balance</span>
+            <span class="aw-balance-val" id="aw-session">$0.00</span>
+          </div>
+          <div class="aw-actions">
+            <button type="button" class="aw-tip" data-tip="3">$3</button>
+            <button type="button" class="aw-tip aw-tip-primary" data-tip="9.71">Album</button>
+          </div>
+        </div>
+        <ul class="aw-feed" id="aw-feed"></ul>
+      </section>
+    </main>
+
+    <audio id="audio" preload="none" playsinline webkit-playsinline></audio>
+    <p class="toast" id="toast" role="status" aria-live="polite"></p>
+    <script src="demo-peaks.js"></script>
+    <script src="player.js" defer></script>
+  </div>
+</body>
+</html>

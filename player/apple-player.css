@@ -1,0 +1,45 @@
+/* Showcase / embed — Apple-minimal overrides + mobile */
+body.is-showcase .top-more,
+body.is-embed .top-more { display: inline-flex; }
+body.is-showcase #btn-add,
+body.is-embed #btn-add { display: inline-flex; }
+
+body.is-showcase,
+body.is-embed {
+  background: #0a0908;
+  min-height: 100dvh;
+  min-height: 100svh;
+}
+
+body.is-showcase .stage,
+body.is-embed .stage {
+  padding-top: 16px;
+}
+
+/* Embedded in landing iframe — use full width, scroll inside frame */
+body.is-embed .app {
+  min-height: 100%;
+  height: auto;
+}
+body.is-embed .stage {
+  min-height: 0;
+  padding-bottom: max(12px, env(safe-area-inset-bottom, 0));
+}
+body.is-embed .playback-stack {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  body.is-showcase .stage,
+  body.is-embed .stage {
+    padding-top: 10px;
+    gap: 10px;
+  }
+  body.is-embed .art-wrap {
+    width: min(160px, 40vw);
+  }
+  body.is-embed .viz {
+    height: 80px;
+    min-height: 80px;
+  }
+}

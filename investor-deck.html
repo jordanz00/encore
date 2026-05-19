@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encore — Investor Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@0,6..72,500;0,6..72,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #faf6ec;
+      --ink: #0a0908;
+      --encore: #dc2626;
+      --muted: #4d4943;
+      --font-d: "Newsreader", Georgia, serif;
+      --font-s: Inter, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e8e2d4; color: var(--ink); font-family: var(--font-s); line-height: 1.5; }
+    .toolbar {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--ink); color: var(--paper);
+      padding: 12px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .toolbar a { color: var(--paper); text-decoration: none; font-weight: 500; }
+    .toolbar a:hover { color: var(--encore); }
+    .deck { max-width: 900px; margin: 0 auto; padding: 24px 16px 64px; }
+    .slide {
+      background: var(--paper);
+      border-radius: 12px;
+      padding: 48px 56px;
+      margin-bottom: 24px;
+      min-height: 420px;
+      box-shadow: 0 4px 24px rgba(10,9,8,0.08);
+      page-break-after: always;
+    }
+    .slide h1, .slide h2 {
+      font-family: var(--font-d);
+      letter-spacing: -0.03em;
+      margin: 0 0 16px;
+      line-height: 1.05;
+    }
+    .slide h1 { font-size: 2.5rem; }
+    .slide h2 { font-size: 1.75rem; }
+    .slide p, .slide li { color: var(--muted); font-size: 1.05rem; }
+    .slide .lead { font-family: var(--font-d); font-size: 1.25rem; color: var(--ink); }
+    .eyebrow { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--encore); margin-bottom: 12px; display: block; }
+    .stat { font-family: var(--font-d); font-size: 4rem; color: var(--encore); line-height: 0.95; margin: 16px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(10,9,8,0.1); }
+    th { font-weight: 600; color: var(--ink); }
+    .encore-col { background: rgba(220,38,38,0.06); font-weight: 600; }
+    @media print {
+      body { background: white; }
+      .toolbar { display: none; }
+      .slide { box-shadow: none; margin: 0; border-radius: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <span>Encore · Investor deck · May 2026</span>
+    <span>
+      <a href="landing.html">← Landing</a>
+      ·
+      <a href="player/index.html?showcase=1" target="_blank">Live player</a>
+      ·
+      <a href="#" onclick="window.print();return false;">Print / PDF</a>
+    </span>
+  </div>
+  <div class="deck">
+    <section class="slide">
+      <span class="eyebrow">Encore Foundation</span>
+      <h1>Streaming,<br /><em style="color:var(--encore);font-style:italic;">the way artists would have built it.</em></h1>
+      <p class="lead">Every play pays the artist. Open source. Foundation-owned. 0% platform fee on direct sales and tips.</p>
+      <p>Pre-alpha · working prototype at encore.audio · AGPL-3.0</p>
+    </section>
+    <section class="slide">
+      <span class="eyebrow">Thesis</span>
+      <h2>One number explains the industry failure</h2>
+      <div class="stat">$0.003</div>
+      <p>Spotify per-stream payout (Loud &amp; Clear 2024). 87% of tracks earn zero under the 1,000-stream gate. Encore pays every play — illustrative demo: <strong>$0.024</strong> to the artist wallet.</p>
+    </section>
+    <section class="slide">
+      <span class="eyebrow">Product</span>
+      <h2>Artist Wallet — paid first</h2>
+      <ul>
+        <li>Every play, tip, and sale credits the artist in under 60 seconds (demo)</li>
+        <li>0% platform fee on tips and direct sales</li>
+        <li>Lossless on every plan · ActivityPub federation · AGPL-3.0</li>
+        <li>Foundation covenant: no weapons / war / military-tech investments</li>
+      </ul>
+      <p><a href="player/index.html?showcase=1">Try the live prototype →</a></p>
+    </section>
+    <section class="slide">
+      <span class="eyebrow">The math</span>
+      <h2>Side by side</h2>
+      <table>
+        <tr><th></th><th>Spotify</th><th>Bandcamp</th><th class="encore-col">Encore</th></tr>
+        <tr><td>Per-stream to artist</td><td>$0.003</td><td>—</td><td class="encore-col">Every play</td></tr>
+        <tr><td>Platform fee on $10 sale</td><td>—</td><td>10–15%</td><td class="encore-col">0%</td></tr>
+        <tr><td>Artist take-home on $10 album</td><td>~3,500 streams</td><td>~$8.85</td><td class="encore-col">$9.71</td></tr>
+        <tr><td>Open / federated</td><td>No</td><td>No</td><td class="encore-col">AGPL / ActivityPub</td></tr>
+      </table>
+    </section>
+    <section class="slide">
+      <span class="eyebrow">The ask</span>
+      <h2>$250K founding-patron round</h2>
+      <p class="lead">Foundation capital, not equity. Encore cannot be sold.</p>
+      <ul>
+        <li>Founding patron: $5K – $25K</li>
+        <li>Strategic angel: $25K – $100K</li>
+        <li>Foundation grant: $100K+</li>
+      </ul>
+      <p>Walkthrough: <a href="mailto:invest@encore.fm">invest@encore.fm</a></p>
+    </section>
+  </div>
+</body>
+</html>

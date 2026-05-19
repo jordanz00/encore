@@ -1,0 +1,13 @@
+{
+  "name": "@encore/config",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./index.js",
+  "files": ["eslint", "tailwind", "tsconfig"],
+  "scripts": {
+    "lint": "echo 'lint placeholder'",
+    "build": "echo 'no build'",
+    "typecheck": "echo 'no types'",
+    "clean": "echo 'no clean'"
+  }
+}

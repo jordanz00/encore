@@ -1052,6 +1052,98 @@
       font-size: 0.875rem;
     }
 
+
+    .deck-showcase {
+      margin: var(--s-4) 0 var(--s-5);
+      padding: var(--s-6) var(--s-5);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      background: linear-gradient(
+        160deg,
+        rgba(220, 38, 38, 0.22) 0%,
+        rgba(10, 9, 8, 0.85) 55%,
+        rgba(52, 211, 153, 0.08) 100%
+      );
+      border: 2px solid rgba(250, 246, 236, 0.28);
+      box-shadow:
+        0 0 0 1px rgba(220, 38, 38, 0.35),
+        0 20px 48px -16px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    .deck-showcase-eyebrow {
+      display: inline-block;
+      margin: 0 0 var(--s-3);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #faf6ec;
+      background: rgba(220, 38, 38, 0.45);
+      border: 1px solid rgba(250, 246, 236, 0.2);
+    }
+    .deck-showcase-title {
+      margin: 0 0 var(--s-2);
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #faf6ec;
+      letter-spacing: -0.02em;
+    }
+    .deck-showcase-desc {
+      margin: 0 0 var(--s-5) !important;
+      font-size: 0.875rem !important;
+      line-height: 1.5 !important;
+      color: rgba(250, 246, 236, 0.82) !important;
+    }
+    .btn-deck-cta {
+      display: block;
+      width: 100%;
+      padding: 16px 22px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 1.0625rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.01em;
+      color: #ffffff !important;
+      background: linear-gradient(145deg, #ef4444 0%, #dc2626 48%, #b91c1c 100%) !important;
+      border: 2px solid rgba(255, 255, 255, 0.45) !important;
+      border-radius: var(--radius);
+      box-shadow:
+        0 0 28px -4px rgba(220, 38, 38, 0.75),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
+    }
+    .btn-deck-cta:hover {
+      color: #ffffff !important;
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.7) !important;
+      box-shadow:
+        0 0 36px -2px rgba(220, 38, 38, 0.9),
+        0 12px 32px -8px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+    .btn-deck-secondary {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px 18px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 0.875rem !important;
+      font-weight: 500;
+      color: rgba(250, 246, 236, 0.75) !important;
+      background: transparent !important;
+      border: 1px solid rgba(250, 246, 236, 0.22) !important;
+      border-radius: var(--radius);
+    }
+    .btn-deck-secondary:hover {
+      color: #faf6ec !important;
+      border-color: rgba(250, 246, 236, 0.4) !important;
+      background: rgba(255, 255, 255, 0.06) !important;
+    }
+
     /* ---------- Footer ---------- */
     footer {
       padding: var(--s-7) 0 var(--s-5);
@@ -1488,11 +1580,12 @@
           </div>
 
           <div class="ask-form">
-            <h3>Investor deck — ready now.</h3>
-            <p>20-page brief: thesis, product, architecture, illustrative financial model, roadmap, team, and ask.</p>
-            <div style="display:flex;flex-direction:column;gap:12px;">
-              <a href="investor-deck.html" class="btn btn-lg" style="text-align:center;text-decoration:none;">View the deck →</a>
-              <a href="investor-deck.html" target="_blank" rel="noopener" class="btn btn-lg" style="text-align:center;text-decoration:none;background:transparent;border:1px solid rgba(250,246,236,0.35);color:var(--paper);">Open for PDF print</a>
+            <div class="deck-showcase">
+              <span class="deck-showcase-eyebrow">Investor materials</span>
+              <h4 class="deck-showcase-title">Investor deck — ready now</h4>
+              <p class="deck-showcase-desc">20-page brief: thesis, product, architecture, illustrative financial model, roadmap, team, and ask.</p>
+              <a href="investor-deck.html" class="btn btn-lg btn-deck-cta">View the deck →</a>
+              <a href="investor-deck.html" target="_blank" rel="noopener" class="btn btn-lg btn-deck-secondary">Open for PDF print</a>
             </div>
             <p style="font-size:0.8125rem;margin-top:16px;opacity:0.75;">Walkthrough: <a href="mailto:invest@encore.audio" style="color:var(--encore);">invest@encore.audio</a></p>
             <ul class="ask-tiers">

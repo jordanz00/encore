@@ -36,11 +36,19 @@ body.is-embed .stage {
 body.is-embed .playback-stack {
   width: 100%;
 }
-body.is-embed #btn-add {
+body.is-embed #btn-add,
+body.is-embed #btn-fullscreen {
   display: none;
 }
 body.is-embed .topbar {
   min-height: 48px;
+}
+body.is-embed .playback-tools .speed-block,
+body.is-embed .playback-tools #btn-queue {
+  display: none;
+}
+body.is-embed .queue-panel {
+  display: none !important;
 }
 
 @media (max-width: 640px) {
@@ -81,6 +89,20 @@ body.is-embed .topbar {
   body.is-embed .artist-wallet,
   body.is-showcase .artist-wallet {
     padding: 12px 14px;
+  }
+  body.is-embed .playback-tools {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    width: 100%;
+  }
+  body.is-embed .volume-block {
+    grid-column: 1 / -1;
+    justify-content: center;
+  }
+  body.is-embed .ptool-skip {
+    font-size: 0.6875rem;
+    padding: 8px 6px;
   }
 }
 

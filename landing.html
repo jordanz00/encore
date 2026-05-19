@@ -414,20 +414,35 @@
     .ep-live-iframe {
       position: relative; z-index: 1;
       display: block; width: 100%;
-      height: min(720px, 85dvh);
-      min-height: 560px;
-      border: 0; background: #0a0908;
+      height: min(640px, 82dvh);
+      min-height: 480px;
+      max-height: 92svh;
+      border: 0;
+      background: #0a0908;
+      transition: height 0.2s ease;
     }
     @media (max-width: 920px) {
       .ep-live-iframe {
-        height: min(760px, 88dvh);
-        min-height: 600px;
+        height: min(580px, 78dvh);
+        min-height: 460px;
       }
     }
     @media (max-width: 560px) {
+      .ep-live-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 14px;
+        gap: 8px;
+      }
+      .ep-live-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .ep-live-hint { display: none; }
       .ep-live-iframe {
-        height: min(820px, 92svh);
-        min-height: 640px;
+        height: 520px;
+        min-height: 420px;
+        max-height: 88svh;
       }
     }
     .ep-live-foot {
@@ -1601,6 +1616,17 @@
       );
       els.forEach(function (el) { io.observe(el); });
     })();
-  </script>
+      /* Live player iframe — auto height on mobile */
+    (function () {
+      var iframe = document.querySelector('.ep-live-iframe');
+      if (!iframe) return;
+      window.addEventListener('message', function (e) {
+        if (!e.data || e.data.type !== 'encore-player-height') return;
+        var h = Math.max(420, Math.min(Number(e.data.height) + 6, window.innerHeight * 0.88));
+        iframe.style.height = h + 'px';
+      });
+    })();
+
+</script>
 </body>
 </html>

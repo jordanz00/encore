@@ -69,6 +69,7 @@
     shortcutsClose: $('#btn-shortcuts-close'),
     playSpinner: $('#play-spinner'),
     appRoot: $('#app-root'),
+    statusPill: $('#status-pill'),
   };
 
   let queue = [];
@@ -155,6 +156,7 @@
   function setBuffering(on) {
     document.body.classList.toggle('is-buffering', on);
     if (el.artBuffer) el.artBuffer.hidden = !on;
+    updateStatusPill();
   }
 
   function updateVolumeUI() {
@@ -173,6 +175,7 @@
     const labels = { off: 'Repeat off', one: 'Repeat one', all: 'Repeat all' };
     el.repeat.setAttribute('aria-label', labels[repeatMode] || labels.off);
     el.repeat.classList.toggle('ptool-repeat', repeatMode === 'one');
+    el.repeat.textContent = repeatMode === 'one' ? 'Repeat 1' : 'Repeat';
   }
 
   function updateShuffleUI() {
@@ -180,6 +183,7 @@
     el.shuffle.setAttribute('aria-pressed', shuffleOn ? 'true' : 'false');
     el.shuffle.classList.toggle('is-active', shuffleOn);
     el.shuffle.setAttribute('aria-label', shuffleOn ? 'Shuffle on' : 'Shuffle off');
+    el.shuffle.textContent = shuffleOn ? 'Shuffling' : 'Shuffle';
   }
 
   function cycleRepeat() {
@@ -350,19 +354,42 @@
     }
   }
 
+  function updateStatusPill() {
+    if (!el.statusPill) return;
+    if (document.body.classList.contains('is-buffering')) {
+      el.statusPill.textContent = 'Loading';
+    } else if (!audio.paused && !audio.ended) {
+      el.statusPill.textContent = 'Playing';
+    } else if (queue.length && idx >= 0) {
+      el.statusPill.textContent = 'Paused';
+    } else {
+      el.statusPill.textContent = 'Ready';
+    }
+  }
+
+  function updateTitleMarquee() {
+    if (!el.title) return;
+    const text = el.title.textContent || '';
+    el.title.classList.toggle('is-long', text.length > 22);
+  }
+
   function updateUI() {
     const t = idx >= 0 ? queue[idx] : (queue[0] || null);
     if (!t) {
       el.title.textContent = 'Choose a track';
       el.sub.textContent = 'Press play for the demo · or add your own files';
       setCoverArt(DEMO_COVER);
+      updateTitleMarquee();
       walletRender();
+      updateStatusPill();
       return;
     }
     el.title.textContent = t.title || 'Untitled';
     el.sub.textContent = [t.artist, t.album].filter(Boolean).join(' · ') || 'Local file';
     setCoverArt(t.cover || null);
+    updateTitleMarquee();
     walletRender();
+    updateStatusPill();
   }
 
   function revokeUrls() {
@@ -632,9 +659,13 @@
       ? Math.max(0, Math.min(1, progress))
       : null;
 
+    const gradBg = g.createLinearGradient(0, 0, w, 0);
+    gradBg.addColorStop(0, 'rgba(250,246,236,0.18)');
+    gradBg.addColorStop(1, 'rgba(250,246,236,0.28)');
+
     g.beginPath();
     traceWaveform(g, w, h, peaks);
-    g.fillStyle = 'rgba(250,246,236,0.22)';
+    g.fillStyle = gradBg;
     g.fill();
 
     if (prog != null && prog > 0) {
@@ -642,19 +673,26 @@
       g.beginPath();
       g.rect(0, 0, w * prog, h);
       g.clip();
+      const gradPlay = g.createLinearGradient(0, 0, w * prog, 0);
+      gradPlay.addColorStop(0, 'rgba(52,211,153,0.75)');
+      gradPlay.addColorStop(0.5, 'rgba(250,246,236,0.9)');
+      gradPlay.addColorStop(1, 'rgba(220,38,38,0.55)');
       g.beginPath();
       traceWaveform(g, w, h, peaks);
-      g.fillStyle = 'rgba(250,246,236,0.82)';
+      g.fillStyle = gradPlay;
       g.fill();
       g.restore();
 
       const px = w * prog;
       g.strokeStyle = 'rgba(250,246,236,0.95)';
-      g.lineWidth = 1.5;
+      g.lineWidth = 2;
+      g.shadowColor = 'rgba(52,211,153,0.5)';
+      g.shadowBlur = 6;
       g.beginPath();
       g.moveTo(px + 0.5, 0);
       g.lineTo(px + 0.5, h);
       g.stroke();
+      g.shadowBlur = 0;
     }
 
     g.strokeStyle = 'rgba(250,246,236,0.12)';
@@ -952,8 +990,14 @@
   audio.addEventListener('waiting', () => setBuffering(true));
   audio.addEventListener('canplay', () => setBuffering(false));
   audio.addEventListener('playing', () => setBuffering(false));
-  audio.addEventListener('play', () => document.body.classList.add('is-playing'));
-  audio.addEventListener('pause', () => document.body.classList.remove('is-playing'));
+  audio.addEventListener('play', () => {
+    document.body.classList.add('is-playing');
+    updateStatusPill();
+  });
+  audio.addEventListener('pause', () => {
+    document.body.classList.remove('is-playing');
+    updateStatusPill();
+  });
   audio.addEventListener('error', () => {
     document.body.classList.remove('is-playing');
     loadedTrackId = null;
@@ -1046,11 +1090,13 @@
     let lastTap = 0;
     let lastX = 0;
     el.artWrap.addEventListener('click', (e) => {
+      if (e.target.closest('.art-buffer')) return;
       const now = Date.now();
       const rect = el.artWrap.getBoundingClientRect();
       const x = e.clientX - rect.left;
-      const zone = x < rect.width * 0.35 ? 'back' : x > rect.width * 0.65 ? 'fwd' : 'none';
-      if (now - lastTap < 320 && Math.abs(e.clientX - lastX) < 40) {
+      const zone = x < rect.width * 0.35 ? 'back' : x > rect.width * 0.65 ? 'fwd' : 'center';
+      const isDouble = now - lastTap < 320 && Math.abs(e.clientX - lastX) < 48;
+      if (isDouble) {
         if (zone === 'back') seekRelative(-10);
         else if (zone === 'fwd') seekRelative(10);
         lastTap = 0;
@@ -1058,6 +1104,7 @@
       }
       lastTap = now;
       lastX = e.clientX;
+      if (zone === 'center') el.play.click();
     });
   }
 

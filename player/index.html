@@ -13,100 +13,153 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@0,6..72,500;0,6..72,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="player.css" />
+  <link rel="stylesheet" href="player-polish.css" />
   <link rel="stylesheet" href="apple-player.css" />
 </head>
 <body>
-<div class="app" id="app-root">  <header class="topbar">
-    <a class="brand" href="../landing.html" target="_top">Encore</a>
-  <div class="top-actions">    <button type="button" class="btn" id="btn-add">Add file</button>
-    <input type="file" id="file-input" accept="audio/*,.aiff,.aif,.mp3,.flac,.wav,.ogg,.m4a" multiple hidden />
-    <button type="button" class="btn btn-ghost" id="btn-fullscreen" hidden aria-label="Fullscreen">⛶</button>
-    <details class="top-more">
-      <summary class="btn btn-ghost" aria-label="More">···</summary>
-      <div class="top-more-menu">        <button type="button" class="top-more-item" id="btn-demo">Reload demo</button>
-        <button type="button" class="top-more-item" id="btn-shortcuts">Keyboard shortcuts</button>
-      </div>    </details>
-  </div>  </header>
-  <main class="stage">
-    <div class="art-wrap" id="art-wrap" title="Double-tap left or right to skip 10 seconds">      <div class="art">        <img class="art-img" id="art-img" src="demo/complicated-cover.png" alt="Album art" width="400" height="400" decoding="async" />
-        <div class="art-buffer" id="art-buffer" hidden aria-hidden="true"></div>      </div>    </div>    <div class="meta">      <p class="meta-eyebrow">Now playing</p>
-      <h1 class="meta-title" id="track-title">Complicated</h1>
-      <p class="meta-sub" id="track-sub">Computer Machine</p>
-    </div>    <div class="playback-stack">      <canvas class="viz" id="viz" role="slider" aria-label="Waveform — tap or drag to seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"></canvas>
-      <div class="seek seek--thin" id="seek" aria-hidden="true"><div class="seek-fill" id="seek-fill"></div></div>      <div class="seek-times">        <span id="time-cur">0:00</span>
-        <span id="time-remaining" class="time-remaining" aria-label="Time remaining">−0:00</span>
-      </div>      <div class="playback-tools" role="toolbar" aria-label="Playback options">        <button type="button" class="ptool" id="btn-shuffle" aria-label="Shuffle off" aria-pressed="false" title="Shuffle (S)">⇄</button>
-        <button type="button" class="ptool" id="btn-repeat" aria-label="Repeat off" data-mode="off" title="Repeat (R)">↻</button>
-        <button type="button" class="ptool ptool-skip" id="btn-skip-back" aria-label="Back 10 seconds">−10</button>
-        <button type="button" class="ptool ptool-skip" id="btn-skip-fwd" aria-label="Forward 10 seconds">+10</button>
-        <label class="volume-block" aria-label="Volume">          <button type="button" class="ptool" id="btn-mute" aria-label="Mute" title="Mute (M)">♪</button>
-          <input type="range" class="volume-slider" id="volume" min="0" max="100" value="100" />
-        </label>        <label class="speed-block">          <span class="speed-lbl">Speed</span>
-          <select class="speed-select" id="speed" aria-label="Playback speed">
-            <option value="0.5">0.5×</option>
-            <option value="0.75">0.75×</option>
-            <option value="1" selected>1×</option>
-            <option value="1.25">1.25×</option>
-            <option value="1.5">1.5×</option>
-            <option value="2">2×</option>
-          </select>
-        </label>        <button type="button" class="ptool" id="btn-queue" aria-label="Show queue" aria-expanded="false" title="Queue (Q)">☰</button>
-      </div>      <div class="transport">        <button type="button" class="tbtn" id="btn-prev" aria-label="Previous track">‹</button>
-        <button type="button" class="tbtn tbtn-play" id="btn-play" aria-label="Play">
-          <span class="icon-play" aria-hidden="true">▶</span>
-          <span class="icon-pause" hidden aria-hidden="true">❚❚</span>
-          <span class="play-spinner" id="play-spinner" hidden aria-hidden="true"></span>
-        </button>
-        <button type="button" class="tbtn" id="btn-next" aria-label="Next track">›</button>
-      </div>    </div>    <aside class="queue-panel" id="queue-panel" hidden aria-label="Playback queue">      <div class="queue-head">        <h2 class="queue-title">Up next</h2>
-        <button type="button" class="queue-close" id="btn-queue-close" aria-label="Close queue">×</button>
-      </div>      <ol class="queue-list" id="queue-list"></ol>    </aside>    <section class="artist-wallet" aria-label="Artist Wallet">
+  <div class="app" id="app-root">
+    <header class="topbar">
+      <a class="brand" href="../landing.html" target="_top">Encore</a>
+      <div class="top-actions">
+        <button type="button" class="btn" id="btn-add">Add file</button>
+        <input type="file" id="file-input" accept="audio/*,.aiff,.aif,.mp3,.flac,.wav,.ogg,.m4a" multiple hidden />
+        <button type="button" class="btn btn-ghost" id="btn-fullscreen" hidden aria-label="Fullscreen">⛶</button>
+        <details class="top-more">
+          <summary class="btn btn-ghost" aria-label="More">···</summary>
+          <div class="top-more-menu">
+            <button type="button" class="top-more-item" id="btn-demo">Reload demo</button>
+            <button type="button" class="top-more-item" id="btn-shortcuts">Shortcuts</button>
+          </div>
+        </details>
+      </div>
+    </header>
 
-      <div class="aw-head">
-        <div class="aw-artist">
-          <div class="aw-avatar" id="aw-avatar" aria-hidden="true"></div>
-          <div>
-            <p class="aw-eyebrow">Artist Wallet</p>
-            <h2 class="aw-name" id="aw-name">Computer Machine</h2>
-            <p class="aw-tag" id="aw-tag">Complicated · Encore demo</p>
+    <main class="stage">
+      <div class="player-card">
+        <span class="status-pill" id="status-pill">Ready</span>
+
+        <div class="art-wrap" id="art-wrap" title="Tap to play · double-tap sides to skip">
+          <div class="art">
+            <img class="art-img" id="art-img" src="demo/complicated-cover.png" alt="Album art" width="400" height="400" decoding="async" />
+            <div class="art-buffer" id="art-buffer" hidden aria-hidden="true"></div>
           </div>
         </div>
-        <div class="aw-this">
-          <span class="aw-label">This play</span>
-          <span class="aw-amt" id="aw-this-play">+ $0.02</span>
+
+        <div class="meta">
+          <p class="meta-eyebrow">Now playing</p>
+          <div class="meta-title-wrap">
+            <h1 class="meta-title" id="track-title">Complicated</h1>
+          </div>
+          <p class="meta-sub" id="track-sub">Computer Machine</p>
+        </div>
+
+        <div class="playback-stack">
+          <p class="viz-hint">Drag waveform to seek</p>
+          <canvas class="viz" id="viz" role="slider" aria-label="Waveform — tap or drag to seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"></canvas>
+          <div class="seek seek--thin" id="seek" aria-hidden="true"><div class="seek-fill" id="seek-fill"></div></div>
+          <div class="seek-times">
+            <span id="time-cur">0:00</span>
+            <span id="time-remaining" class="time-remaining" aria-label="Time remaining">−0:00</span>
+          </div>
+
+          <div class="transport-shell">
+            <div class="transport">
+              <button type="button" class="tbtn" id="btn-prev" aria-label="Previous track"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6v12M18 6l-8 6 8 6V6z"/></svg></button>
+              <button type="button" class="tbtn tbtn-play" id="btn-play" aria-label="Play">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+                <span class="play-spinner" id="play-spinner" hidden aria-hidden="true"></span>
+              </button>
+              <button type="button" class="tbtn" id="btn-next" aria-label="Next track"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6v12M12 6l8 6-8 6V6z"/></svg></button>
+            </div>
+          </div>
+
+          <div class="playback-tools" role="toolbar" aria-label="Playback options">
+            <button type="button" class="ptool" id="btn-shuffle" aria-label="Shuffle off" aria-pressed="false" title="Shuffle (S)">Shuffle</button>
+            <button type="button" class="ptool" id="btn-repeat" aria-label="Repeat off" data-mode="off" title="Repeat (R)">Repeat</button>
+            <button type="button" class="ptool ptool-skip" id="btn-skip-back" aria-label="Back 10 seconds">−10s</button>
+            <button type="button" class="ptool ptool-skip" id="btn-skip-fwd" aria-label="Forward 10 seconds">+10s</button>
+            <label class="volume-block" aria-label="Volume">
+              <button type="button" class="ptool" id="btn-mute" aria-label="Mute" title="Mute (M)">Vol</button>
+              <input type="range" class="volume-slider" id="volume" min="0" max="100" value="100" />
+            </label>
+            <label class="speed-block">
+              <span class="speed-lbl">Speed</span>
+              <select class="speed-select" id="speed" aria-label="Playback speed">
+                <option value="0.5">0.5×</option>
+                <option value="0.75">0.75×</option>
+                <option value="1" selected>1×</option>
+                <option value="1.25">1.25×</option>
+                <option value="1.5">1.5×</option>
+                <option value="2">2×</option>
+              </select>
+            </label>
+            <button type="button" class="ptool" id="btn-queue" aria-label="Show queue" aria-expanded="false" title="Queue (Q)">Queue</button>
+          </div>
         </div>
       </div>
-      <div class="aw-row">
-        <div>
-          <span class="aw-balance-lbl">Session balance</span>
-          <span class="aw-balance-val" id="aw-session">$0.00</span>
+
+      <aside class="queue-panel" id="queue-panel" hidden aria-label="Playback queue">
+        <div class="queue-head">
+          <h2 class="queue-title">Up next</h2>
+          <button type="button" class="queue-close" id="btn-queue-close" aria-label="Close queue">×</button>
         </div>
-        <div class="aw-actions">
-          <button type="button" class="aw-tip" data-tip="3">$3</button>
-          <button type="button" class="aw-tip aw-tip-primary" data-tip="9.71">Album</button>
+        <ol class="queue-list" id="queue-list"></ol>
+      </aside>
+
+      <section class="artist-wallet" aria-label="Artist Wallet">
+        <div class="aw-head">
+          <div class="aw-artist">
+            <div class="aw-avatar" id="aw-avatar" aria-hidden="true"></div>
+            <div>
+              <p class="aw-eyebrow">Artist Wallet</p>
+              <h2 class="aw-name" id="aw-name">Computer Machine</h2>
+              <p class="aw-tag" id="aw-tag">Complicated · Encore demo</p>
+            </div>
+          </div>
+          <div class="aw-this">
+            <span class="aw-label">This play</span>
+            <span class="aw-amt" id="aw-this-play">+ $0.02</span>
+          </div>
         </div>
+        <div class="aw-row">
+          <div>
+            <span class="aw-balance-lbl">Session balance</span>
+            <span class="aw-balance-val" id="aw-session">$0.00</span>
+          </div>
+          <div class="aw-actions">
+            <button type="button" class="aw-tip" data-tip="3">Tip $3</button>
+            <button type="button" class="aw-tip aw-tip-primary" data-tip="9.71">Buy album</button>
+          </div>
+        </div>
+        <ul class="aw-feed" id="aw-feed"></ul>
+      </section>
+    </main>
+
+    <dialog class="shortcuts-dialog" id="shortcuts-dialog" aria-labelledby="shortcuts-title">
+      <div class="shortcuts-inner">
+        <div class="shortcuts-head">
+          <h2 id="shortcuts-title">Keyboard shortcuts</h2>
+          <button type="button" class="shortcuts-close" id="btn-shortcuts-close" aria-label="Close">×</button>
+        </div>
+        <ul class="shortcuts-list">
+          <li><kbd>Space</kbd> Play / pause</li>
+          <li><kbd>M</kbd> Mute</li>
+          <li><kbd>←</kbd> <kbd>→</kbd> Seek 5 s (<kbd>Shift</kbd> = 10 s)</li>
+          <li><kbd>Alt</kbd>+<kbd>←</kbd> <kbd>→</kbd> Skip 10 s</li>
+          <li><kbd>↑</kbd> <kbd>↓</kbd> Volume</li>
+          <li><kbd>+</kbd> <kbd>−</kbd> Speed</li>
+          <li><kbd>N</kbd> Next · <kbd>P</kbd> Previous</li>
+          <li><kbd>S</kbd> Shuffle · <kbd>R</kbd> Repeat</li>
+          <li><kbd>Q</kbd> Queue · <kbd>F</kbd> Fullscreen</li>
+        </ul>
       </div>
-      <ul class="aw-feed" id="aw-feed"></ul>
-    </section>
-  </main>
-  <dialog class="shortcuts-dialog" id="shortcuts-dialog" aria-labelledby="shortcuts-title">
-    <div class="shortcuts-inner">      <div class="shortcuts-head">        <h2 id="shortcuts-title">Keyboard shortcuts</h2>
-        <button type="button" class="shortcuts-close" id="btn-shortcuts-close" aria-label="Close">×</button>
-      </div>      <ul class="shortcuts-list">
-        <li><kbd>Space</kbd> Play / pause</li>
-        <li><kbd>M</kbd> Mute</li>
-        <li><kbd>←</kbd> <kbd>→</kbd> Seek 5 s (<kbd>Shift</kbd> = 10 s)</li>
-        <li><kbd>Alt</kbd>+<kbd>←</kbd> <kbd>→</kbd> Skip 10 s</li>
-        <li><kbd>↑</kbd> <kbd>↓</kbd> Volume</li>
-        <li><kbd>+</kbd> <kbd>−</kbd> Speed</li>
-        <li><kbd>N</kbd> Next · <kbd>P</kbd> Previous</li>
-        <li><kbd>S</kbd> Shuffle · <kbd>R</kbd> Repeat</li>
-        <li><kbd>Q</kbd> Queue · <kbd>F</kbd> Fullscreen</li>
-      </ul>
-    </div>  </dialog>
-  <audio id="audio" preload="none" playsinline webkit-playsinline></audio>
-  <p class="toast" id="toast" role="status" aria-live="polite"></p>
-  <script src="demo-peaks.js"></script>
-  <script src="player.js" defer></script>
-</div></body>
+    </dialog>
+
+    <audio id="audio" preload="none" playsinline webkit-playsinline></audio>
+    <p class="toast" id="toast" role="status" aria-live="polite"></p>
+    <script src="demo-peaks.js"></script>
+    <script src="player.js" defer></script>
+  </div>
+</body>
 </html>

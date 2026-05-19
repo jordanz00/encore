@@ -1,0 +1,403 @@
+/**
+ * Encore player — polish layer (pro, fun, hip).
+ * Loaded after player.css; uses --enc-* tokens.
+ */
+
+:root {
+  --enc-bg: #0a0908;
+  --enc-bg-elevated: #12100e;
+  --enc-surface: rgba(255, 255, 255, 0.04);
+  --enc-surface-hover: rgba(255, 255, 255, 0.08);
+  --enc-border: rgba(255, 255, 255, 0.1);
+  --enc-cream: #faf6ec;
+  --enc-cream-dim: rgba(250, 246, 236, 0.55);
+  --enc-mint: #34d399;
+  --enc-mint-glow: rgba(52, 211, 153, 0.35);
+  --enc-red: #dc2626;
+  --enc-red-glow: rgba(220, 38, 38, 0.45);
+  --enc-amber: #fbbf24;
+  --enc-radius-lg: 20px;
+  --enc-radius-md: 14px;
+  --enc-shadow: 0 24px 64px -24px rgba(0, 0, 0, 0.65);
+  --enc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html, body {
+  background: var(--enc-bg);
+  background-image:
+    radial-gradient(ellipse 90% 60% at 50% -20%, rgba(220, 38, 38, 0.14), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 100% 80%, rgba(52, 211, 153, 0.08), transparent 50%);
+}
+
+.app {
+  position: relative;
+}
+
+/* Ambient glow behind album art (JS toggles intensity when playing) */
+.stage::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  background: radial-gradient(
+    circle at 50% 28%,
+    var(--enc-glow-color, rgba(220, 38, 38, 0.2)) 0%,
+    transparent 55%
+  );
+  transition: opacity 0.6s var(--enc-ease);
+}
+body:not(.is-playing) .stage::before {
+  opacity: 0.25;
+}
+
+.stage > * {
+  position: relative;
+  z-index: 1;
+}
+
+.topbar {
+  background: rgba(10, 9, 8, 0.72);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom-color: var(--enc-border);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.brand::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--enc-red);
+  box-shadow: 0 0 12px var(--enc-red-glow);
+}
+
+.btn {
+  transition: background 0.2s var(--enc-ease), border-color 0.2s, transform 0.15s;
+}
+.btn:hover {
+  background: var(--enc-surface-hover);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Main now-playing card */
+.player-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 20px 18px 18px;
+  border-radius: var(--enc-radius-lg);
+  background: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.02) 40%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  border: 1px solid var(--enc-border);
+  box-shadow: var(--enc-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  transition: box-shadow 0.4s var(--enc-ease), border-color 0.4s;
+}
+body.is-playing .player-card {
+  border-color: rgba(52, 211, 153, 0.22);
+  box-shadow:
+    var(--enc-shadow),
+    0 0 48px -12px var(--enc-mint-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.status-pill {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--enc-cream-dim);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--enc-border);
+  transition: all 0.3s var(--enc-ease);
+}
+.status-pill::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--enc-cream-dim);
+}
+body.is-playing .status-pill {
+  color: var(--enc-mint);
+  border-color: rgba(52, 211, 153, 0.35);
+  background: rgba(52, 211, 153, 0.1);
+}
+body.is-playing .status-pill::before {
+  background: var(--enc-mint);
+  box-shadow: 0 0 8px var(--enc-mint);
+  animation: statusPulse 1.4s ease-in-out infinite;
+}
+@keyframes statusPulse {
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+.art-wrap {
+  width: min(220px, 58vw);
+  cursor: pointer;
+}
+.art-wrap::after {
+  content: "Tap to play";
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--enc-cream-dim);
+  white-space: nowrap;
+  opacity: 0.85;
+  pointer-events: none;
+}
+body.is-playing .art-wrap::after {
+  content: "Double-tap sides · ±10s";
+}
+
+.art {
+  border-radius: 18px;
+  box-shadow:
+    0 28px 56px -20px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  transition: transform 0.35s var(--enc-ease), box-shadow 0.35s;
+}
+body.is-playing .art {
+  box-shadow:
+    0 32px 64px -16px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 40px -8px var(--enc-glow-color, var(--enc-red-glow));
+}
+.art-img {
+  border-radius: 18px;
+}
+
+.meta {
+  width: 100%;
+  text-align: center;
+}
+.meta-eyebrow {
+  color: var(--enc-mint);
+  letter-spacing: 0.12em;
+}
+.meta-title-wrap {
+  overflow: hidden;
+  max-width: 100%;
+  mask-image: linear-gradient(90deg, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
+}
+.meta-title {
+  font-size: clamp(1.4rem, 4.5vw, 1.85rem);
+  white-space: nowrap;
+}
+.meta-title.is-long {
+  display: inline-block;
+  animation: titleMarquee 12s linear infinite;
+}
+@keyframes titleMarquee {
+  0%, 8% { transform: translateX(0); }
+  45%, 55% { transform: translateX(min(0px, calc(-100% + 100vw - 80px))); }
+  92%, 100% { transform: translateX(0); }
+}
+
+.playback-stack {
+  width: 100%;
+  padding: 14px 14px 12px;
+  border-radius: var(--enc-radius-md);
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 4px;
+}
+
+.viz-hint {
+  margin: 0 0 6px;
+  font-size: 0.6875rem;
+  text-align: center;
+  letter-spacing: 0.04em;
+  color: rgba(250, 246, 236, 0.35);
+}
+
+.viz {
+  height: 80px;
+  min-height: 80px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.25));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.viz:hover,
+.viz:focus-visible {
+  border-color: rgba(250, 246, 236, 0.2);
+  box-shadow: 0 0 0 3px rgba(250, 246, 236, 0.08);
+}
+
+.seek-times {
+  margin-top: 4px;
+  padding: 0 2px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+#time-cur {
+  color: var(--enc-cream);
+}
+
+/* Transport — hero controls */
+.transport-shell {
+  width: 100%;
+  padding: 8px 0 4px;
+}
+.transport {
+  gap: 32px;
+  margin-top: 0;
+}
+
+.tbtn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid transparent;
+  transition: background 0.2s, transform 0.15s var(--enc-ease), color 0.2s;
+}
+.tbtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--enc-cream);
+}
+.tbtn svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.tbtn-play {
+  position: relative;
+  background: linear-gradient(145deg, #fffef8 0%, #f0ebe0 100%);
+  color: var(--enc-bg);
+  border: none;
+  box-shadow:
+    0 12px 32px -8px rgba(0, 0, 0, 0.5),
+    0 0 0 0 rgba(250, 246, 236, 0.4);
+  transition: transform 0.2s var(--enc-ease), box-shadow 0.3s;
+}
+.tbtn-play:hover {
+  transform: scale(1.04);
+  box-shadow:
+    0 16px 40px -8px rgba(0, 0, 0, 0.55),
+    0 0 0 6px rgba(250, 246, 236, 0.12);
+}
+body.is-playing .tbtn-play {
+  animation: playGlow 2.5s ease-in-out infinite;
+}
+@keyframes playGlow {
+  50% {
+    box-shadow:
+      0 16px 40px -8px rgba(0, 0, 0, 0.55),
+      0 0 0 10px rgba(52, 211, 153, 0.15);
+  }
+}
+.tbtn-play svg {
+  width: 26px;
+  height: 26px;
+}
+
+.playback-tools {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 8px;
+}
+
+.ptool {
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.12s;
+}
+.ptool:hover {
+  background: var(--enc-surface-hover);
+  color: var(--enc-cream);
+}
+.ptool:active {
+  transform: scale(0.94);
+}
+
+.artist-wallet {
+  background: linear-gradient(
+    145deg,
+    rgba(52, 211, 153, 0.1) 0%,
+    rgba(52, 211, 153, 0.04) 100%
+  );
+  border-color: rgba(52, 211, 153, 0.25);
+  box-shadow: 0 12px 32px -20px rgba(0, 0, 0, 0.4);
+}
+
+.aw-tip {
+  transition: transform 0.15s, background 0.2s, box-shadow 0.2s;
+}
+.aw-tip:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+.aw-tip-primary {
+  background: linear-gradient(145deg, #ef4444, #dc2626);
+  box-shadow: 0 4px 16px -4px rgba(220, 38, 38, 0.5);
+}
+.aw-tip-primary:hover {
+  box-shadow: 0 6px 20px -4px rgba(220, 38, 38, 0.65);
+}
+
+.queue-panel {
+  background: rgba(18, 16, 14, 0.92);
+  backdrop-filter: blur(12px);
+  border-color: var(--enc-border);
+}
+
+.toast {
+  background: rgba(28, 25, 22, 0.94);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  font-weight: 500;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+.shortcuts-dialog {
+  border-radius: var(--enc-radius-lg);
+  box-shadow: var(--enc-shadow);
+}
+
+/* Mobile polish */
+@media (max-width: 640px) {
+  .player-card {
+    padding: 16px 14px 14px;
+    border-radius: 16px;
+  }
+  .art-wrap {
+    width: min(168px, 46vw);
+  }
+  .viz {
+    height: 64px;
+    min-height: 64px;
+  }
+  .transport {
+    gap: clamp(18px, 6vw, 28px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meta-title.is-long { animation: none; }
+  body.is-playing .tbtn-play { animation: none; }
+  body.is-playing .status-pill::before { animation: none; }
+}

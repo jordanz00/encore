@@ -44,8 +44,17 @@ body.is-embed .topbar {
   min-height: 48px;
 }
 body.is-embed .playback-tools .speed-block,
-body.is-embed .playback-tools #btn-queue {
+body.is-embed .playback-tools #btn-queue,
+body.is-embed .playback-tools #btn-shuffle {
   display: none;
+}
+body.is-embed .player-card {
+  padding: 14px 12px 12px;
+  border-radius: 16px;
+}
+body.is-embed .status-pill {
+  font-size: 0.625rem;
+  padding: 4px 10px;
 }
 body.is-embed .queue-panel {
   display: none !important;

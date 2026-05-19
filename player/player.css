@@ -313,9 +313,10 @@ button {
   font-size: 1.55rem;
   box-shadow: 0 8px 28px -8px rgba(0,0,0,0.45);
 }
-body.is-playing .icon-play { display: none; }
-body.is-playing .icon-pause { display: inline !important; }
-body:not(.is-playing) .icon-pause { display: none !important; }
+.tbtn-play .icon-play { display: block; }
+.tbtn-play .icon-pause { display: none; }
+body.is-playing .tbtn-play .icon-play { display: none; }
+body.is-playing .tbtn-play .icon-pause { display: block; }
 body.is-buffering .play-spinner { display: block !important; }
 body.is-buffering .icon-play,
 body.is-buffering .icon-pause { visibility: hidden; }

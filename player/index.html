@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="player.css" />
   <link rel="stylesheet" href="player-polish.css" />
   <link rel="stylesheet" href="apple-player.css" />
+  <link rel="stylesheet" href="type-system.css" />
 </head>
 <body>
   <div class="drop-overlay" id="drop-overlay" hidden aria-hidden="true">
@@ -44,13 +45,6 @@
       <div class="player-card">
         <span class="status-pill" id="status-pill">Ready</span>
 
-        <div class="art-wrap" id="art-wrap" title="Tap to play · double-tap sides to skip">
-          <div class="art">
-            <img class="art-img" id="art-img" src="demo/complicated-cover.png" alt="Album art" width="400" height="400" decoding="async" />
-            <div class="art-buffer" id="art-buffer" hidden aria-hidden="true"></div>
-          </div>
-        </div>
-
         <div class="meta">
           <p class="meta-eyebrow">Now playing</p>
           <div class="meta-title-wrap">
@@ -59,8 +53,15 @@
           <p class="meta-sub" id="track-sub">Computer Machine</p>
         </div>
 
+        <div class="art-wrap" id="art-wrap" aria-label="Album art — tap center to play, double-tap sides to skip 10 seconds">
+          <div class="art">
+            <img class="art-img" id="art-img" src="demo/complicated-cover.png" alt="" width="400" height="400" decoding="async" />
+            <div class="art-buffer" id="art-buffer" hidden aria-hidden="true"></div>
+          </div>
+        </div>
+
         <div class="playback-stack">
-          <p class="viz-hint">Drag files anywhere · drag waveform to seek · <button type="button" class="viz-hint-link" id="btn-open-inline">open audio</button></p>
+          <p class="viz-hint" id="viz-hint"><span class="viz-hint-desktop">Drag audio files anywhere · </span>Drag waveform to seek</p>
           <canvas class="viz" id="viz" role="slider" aria-label="Waveform — tap or drag to seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"></canvas>
           <div class="seek seek--thin" id="seek" aria-hidden="true"><div class="seek-fill" id="seek-fill"></div></div>
           <div class="seek-times">

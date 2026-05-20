@@ -12,12 +12,12 @@
       --paper: #faf6ec;
       --ink: #0a0908;
       --encore: #dc2626;
-      --muted: #4d4943;
+      --muted: #3f3b36;
       --font-d: "Newsreader", Georgia, serif;
       --font-s: Inter, system-ui, sans-serif;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; background: #e8e2d4; color: var(--ink); font-family: var(--font-s); line-height: 1.5; }
+    body { margin: 0; background: #e8e2d4; color: var(--ink); font-family: var(--font-s); font-size: 17px; line-height: 1.55; letter-spacing: -0.011em; -webkit-font-smoothing: antialiased; }
     .toolbar {
       position: sticky; top: 0; z-index: 10;
       background: var(--ink); color: var(--paper);
@@ -46,7 +46,7 @@
     .slide h2 { font-size: 1.75rem; }
     .slide p, .slide li { color: var(--muted); font-size: 1.05rem; }
     .slide .lead { font-family: var(--font-d); font-size: 1.25rem; color: var(--ink); }
-    .eyebrow { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--encore); margin-bottom: 12px; display: block; }
+    .eyebrow { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--encore); margin-bottom: 12px; display: block; }
     .stat { font-family: var(--font-d); font-size: 4rem; color: var(--encore); line-height: 0.95; margin: 16px 0; }
     table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
     th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(10,9,8,0.1); }
@@ -67,8 +67,8 @@
     .flow-box .line:last-child { border-bottom: none; font-weight: 600; color: var(--ink); }
     .flow-box .amt { font-family: var(--font-d); font-variant-numeric: tabular-nums; }
     .flow-box .sub { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
-    table.compact th, table.compact td { padding: 7px 10px; font-size: 0.82rem; }
-    .note-box { font-size: 0.8rem; color: var(--muted); margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(10,9,8,0.1); }
+    table.compact th, table.compact td { padding: 7px 10px; font-size: 0.875rem; }
+    .note-box { font-size: 0.8125rem; color: var(--muted); margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(10,9,8,0.1); }
 
     @media print {
       body { background: white; }

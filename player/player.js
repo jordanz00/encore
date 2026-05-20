@@ -1159,7 +1159,10 @@
   }
 
   if (IS_SHOWCASE) document.body.classList.add('is-showcase');
-  if (IS_EMBED) document.body.classList.add('is-embed');
+  if (IS_EMBED) {
+    document.body.classList.add('is-embed');
+    document.documentElement.classList.add('is-embed-root');
+  }
 
 
   function setDragActive(on) {
@@ -1203,12 +1206,14 @@
     clearTimeout(embedHeightTimer);
     embedHeightTimer = setTimeout(() => {
       requestAnimationFrame(() => {
+        const root = document.documentElement;
+        const h = Math.ceil(root.getBoundingClientRect().height || root.scrollHeight);
         window.parent.postMessage(
-          { type: 'encore-player-height', height: document.documentElement.scrollHeight },
+          { type: 'encore-player-height', height: h },
           '*'
         );
       });
-    }, 80);
+    }, 50);
   }
 
   if (IS_EMBED) {

@@ -582,18 +582,18 @@
     .ep-live-iframe {
       position: relative; z-index: 1;
       display: block; width: 100%;
-      height: 548px;
-      min-height: 548px;
-      max-height: 548px;
+      height: 700px;
+      min-height: 680px;
+      max-height: 820px;
       border: 0;
       background: #0a0908;
       overflow: hidden;
     }
     @media (max-width: 920px) {
       .ep-live-iframe {
-        height: 528px;
-        min-height: 528px;
-        max-height: 528px;
+        height: 680px;
+        min-height: 660px;
+        max-height: 800px;
       }
     }
     @media (max-width: 560px) {
@@ -609,9 +609,9 @@
       }
       .ep-live-hint { display: none; }
       .ep-live-iframe {
-        height: 508px;
-        min-height: 508px;
-        max-height: 508px;
+        height: 660px;
+        min-height: 640px;
+        max-height: 780px;
       }
     }
     .ep-live-foot {
@@ -1630,7 +1630,7 @@
               <iframe class="ep-live-iframe" src="player/index.html?showcase=1&amp;embed=1" title="Encore live player" loading="eager" allow="autoplay"></iframe>
               <footer class="ep-live-foot">
                 <span class="ok">● Fully functional prototype</span>
-                <span>Press play · tip the artist · watch the wallet update</span>
+                <span>Press play · use <strong>Tip $3</strong> or <strong>Buy album</strong> below · watch balance update</span>
               </footer>
             </div>
             <div class="ep-live-proof">
@@ -2116,6 +2116,22 @@
       );
       els.forEach(function (el) { io.observe(el); });
     })();
+    /* Live player iframe — fit wallet + tip buttons (no inner scroll) */
+    (function () {
+      var iframe = document.querySelector('.ep-live-iframe');
+      if (!iframe) return;
+      var applied = false;
+      window.addEventListener('message', function (e) {
+        if (applied || !e.data || e.data.type !== 'encore-player-height') return;
+        var h = Math.ceil(Number(e.data.height) + 6);
+        if (!h || h < 520 || h > 820) return;
+        iframe.style.height = h + 'px';
+        iframe.style.minHeight = h + 'px';
+        iframe.style.maxHeight = h + 'px';
+        applied = true;
+      });
+    })();
+
     /* Prevent load-time scroll jump (iframe/layout restoration) */
     (function () {
       var hash = location.hash;

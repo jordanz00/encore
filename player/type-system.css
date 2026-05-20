@@ -241,7 +241,13 @@ body.is-embed .aw-amt {
 }
 
 body.is-embed .aw-tip {
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+body.is-embed .aw-label,
+body.is-embed .aw-balance-lbl {
+  font-size: var(--text-2xs);
 }
 
 @media (prefers-contrast: more) {

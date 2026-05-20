@@ -103,15 +103,6 @@
             <button type="button" class="ptool" id="btn-queue" aria-label="Show queue" aria-expanded="false" title="Queue (Q)">Queue</button>
           </div>
         </div>
-      </div>
-
-      <aside class="queue-panel" id="queue-panel" hidden aria-label="Playback queue">
-        <div class="queue-head">
-          <h2 class="queue-title">Up next</h2>
-          <button type="button" class="queue-close" id="btn-queue-close" aria-label="Close queue">×</button>
-        </div>
-        <ol class="queue-list" id="queue-list"></ol>
-      </aside>
 
       <section class="artist-wallet" aria-label="Artist Wallet">
         <div class="aw-head">
@@ -140,6 +131,16 @@
         </div>
         <ul class="aw-feed" id="aw-feed"></ul>
       </section>
+      </div>
+
+      <aside class="queue-panel" id="queue-panel" hidden aria-label="Playback queue">
+        <div class="queue-head">
+          <h2 class="queue-title">Up next</h2>
+          <button type="button" class="queue-close" id="btn-queue-close" aria-label="Close queue">×</button>
+        </div>
+        <ol class="queue-list" id="queue-list"></ol>
+      </aside>
+
     </main>
 
     <dialog class="shortcuts-dialog" id="shortcuts-dialog" aria-labelledby="shortcuts-title">

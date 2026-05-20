@@ -1,6 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Inter, Newsreader, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
   title: "Encore — open-source music for everyone",
@@ -8,49 +27,89 @@ export const metadata: Metadata = {
     "Encore is a free, open-source music platform built for artists. Upload, share, sell, and stream — without surveillance.",
 };
 
+const navItems = [
+  { href: "/discover", label: "Discover" },
+  { href: "/library", label: "Library" },
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/search", label: "Search" },
+  { href: "/upload", label: "Upload" },
+  { href: "/system", label: "System" },
+] as const;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${inter.variable} ${newsreader.variable} ${jetbrains.variable}`}
+    >
       <body className="min-h-screen flex flex-col">
-        <header className="border-b border-black/5 dark:border-white/10">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+
+        <header className="sticky top-0 z-50 border-b border-black/[0.06] dark:border-white/10 bg-paper/90 dark:bg-[#0b0b0e]/90 backdrop-blur-md">
           <nav
-            className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between"
+            className="encore-container py-3 flex items-center justify-between gap-6"
             aria-label="Primary"
           >
-            <Link href="/" className="font-bold text-lg tracking-tight">
+            <Link
+              href="/"
+              className="font-display text-xl font-semibold tracking-tight text-ink dark:text-[#faf6ec] min-h-11 inline-flex items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
               Encore
             </Link>
-            <div className="flex items-center gap-4 text-sm">
-              <Link href="/discover" className="hover:underline">Discover</Link>
-              <Link href="/editorial" className="hover:underline">Editorial</Link>
-              <Link href="/search" className="hover:underline">Search</Link>
-              <Link href="/library" className="hover:underline">Library</Link>
-              <Link href="/upload" className="hover:underline">Upload</Link>
-              <Link
-                href="/login"
-                className="rounded-full bg-ink text-paper px-3 py-1 dark:bg-paper dark:text-ink"
-              >
-                Sign in
-              </Link>
-            </div>
+            <ul className="flex flex-wrap items-center gap-x-1 gap-y-2 list-none m-0 p-0">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="encore-nav-link">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/login" className="encore-btn-primary text-sm py-2 px-4">
+                  Sign in
+                </Link>
+              </li>
+            </ul>
           </nav>
         </header>
 
-        <main className="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">{children}</main>
+        <main
+          id="main-content"
+          className="flex-1 encore-container py-10 sm:py-12"
+          tabIndex={-1}
+        >
+          {children}
+        </main>
 
-        <footer className="border-t border-black/5 dark:border-white/10 mt-12">
-          <div className="max-w-6xl mx-auto px-4 py-6 text-sm text-ink-muted flex flex-wrap gap-4 justify-between">
-            <div>Encore. AGPL-3.0. Built for artists, not algorithms.</div>
-            <div className="flex gap-4">
-              <Link href="/about">About</Link>
-              <Link href="/governance">Governance</Link>
-              <Link href="/privacy">Privacy</Link>
-              <a href="https://github.com/encore/encore">Source</a>
-            </div>
+        <footer className="border-t border-black/[0.06] dark:border-white/10 mt-16">
+          <div className="encore-container py-8 flex flex-wrap gap-6 justify-between text-sm text-ink-muted dark:text-[#c0c0ca] leading-relaxed">
+            <p className="max-w-prose m-0">
+              Encore. AGPL-3.0. Built for artists, not algorithms.
+            </p>
+            <nav aria-label="Footer">
+              <ul className="flex flex-wrap gap-5 list-none m-0 p-0">
+                <li>
+                  <Link href="/about" className="encore-nav-link">
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/jordanz00/encore"
+                    className="encore-nav-link"
+                    rel="noopener noreferrer"
+                  >
+                    Source
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </footer>
       </body>

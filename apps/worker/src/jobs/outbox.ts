@@ -29,11 +29,10 @@ export function startOutboxWorker(log: Logger): Worker {
       log.info({ jobId: job.id, artistId }, "outbox fanout start");
 
       const followerInboxes = await db.execute<{ inbox_url: string }>(sql`
-        SELECT DISTINCT inbox_url
-        FROM artists
-        WHERE id IN (
-          SELECT artist_id FROM follows WHERE artist_id = ${artistId}
-        ) AND inbox_url IS NOT NULL
+        SELECT DISTINCT follower_inbox_url AS inbox_url
+        FROM remote_followers
+        WHERE artist_id = ${artistId}
+          AND follower_inbox_url IS NOT NULL
       `);
       const list = (followerInboxes as unknown as { rows: any[] }).rows ?? [];
       const body = JSON.stringify(activity);

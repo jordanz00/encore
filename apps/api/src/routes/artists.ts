@@ -1,10 +1,37 @@
 import type { FastifyInstance } from "fastify";
 import { z } from "zod";
 import { db, schema } from "@encore/db";
-import { eq } from "drizzle-orm";
+import { eq, desc, and, isNull, sql } from "drizzle-orm";
 import { requireUser } from "../lib/auth.js";
 
 export async function registerArtists(app: FastifyInstance): Promise<void> {
+  /** Current user's artist profile (upload / publish flows). */
+  app.get("/me/profile", async (req, reply) => {
+    const user = await requireUser(req);
+    const [artist] = await db
+      .select()
+      .from(schema.artists)
+      .where(eq(schema.artists.ownerUserId, user.id))
+      .limit(1);
+    return { artist: artist ?? null };
+  });
+
+  /** Count of stored ActivityPub Follow activities (remote followers). */
+  app.get("/me/remote-followers", async (req, reply) => {
+    const user = await requireUser(req);
+    const [artist] = await db
+      .select({ id: schema.artists.id })
+      .from(schema.artists)
+      .where(eq(schema.artists.ownerUserId, user.id))
+      .limit(1);
+    if (!artist) return { count: 0 };
+    const [row] = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(schema.remoteFollowers)
+      .where(eq(schema.remoteFollowers.artistId, artist.id));
+    return { count: row?.count ?? 0 };
+  });
+
   app.get("/:slug", async (req, reply) => {
     const { slug } = req.params as { slug: string };
     const [artist] = await db
@@ -14,6 +41,31 @@ export async function registerArtists(app: FastifyInstance): Promise<void> {
       .limit(1);
     if (!artist) return reply.code(404).send({ error: "not_found" });
     return { artist };
+  });
+
+  app.get("/:slug/releases", async (req, reply) => {
+    const { slug } = req.params as { slug: string };
+    const [artist] = await db
+      .select({ id: schema.artists.id })
+      .from(schema.artists)
+      .where(eq(schema.artists.slug, slug))
+      .limit(1);
+    if (!artist) return reply.code(404).send({ error: "not_found" });
+
+    const releases = await db
+      .select()
+      .from(schema.releases)
+      .where(
+        and(
+          eq(schema.releases.primaryArtistId, artist.id),
+          eq(schema.releases.status, "published"),
+          isNull(schema.releases.deletedAt),
+        ),
+      )
+      .orderBy(desc(schema.releases.publishedAt))
+      .limit(50);
+
+    return { artistId: artist.id, releases };
   });
 
   const createSchema = z.object({

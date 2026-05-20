@@ -1,18 +1,24 @@
 /**
- * @encore/ui — shared design tokens + primitive components.
- * Today: tokens only. shadcn-style components land per RFC 007.
+ * @encore/ui — re-exports @encore/ui-system tokens for backward compatibility.
  */
-export const tokens = {
+export { tokens, colors, spacing, typography, motion } from "@encore/ui-system";
+
+/** @deprecated use tokens from @encore/ui-system */
+export const legacyTokens = {
   color: {
-    inkDefault: "#0b0b0e",
-    inkMuted: "#7a7a85",
-    paperDefault: "#fafafa",
-    paperSoft: "#f1f1f4",
-    accentDefault: "#ff5b00",
-    accentSoft: "#ffb285",
+    ink: "#0a0908",
+    inkMuted: "#3d3934",
+    inkDim: "#524d47",
+    paper: "#faf6ec",
+    paperSoft: "#f3eddb",
+    accent: "#dc2626",
+    accentDeep: "#991b1b",
   },
-  radius: { sm: 4, md: 8, lg: 16, full: 9999 },
-  spacing: [0, 4, 8, 12, 16, 24, 32, 48, 64, 96],
+  font: {
+    display: '"Newsreader", ui-serif, Georgia, serif',
+    sans: '"Inter", ui-sans-serif, system-ui, sans-serif',
+    mono: '"JetBrains Mono", ui-monospace, monospace',
+  },
 } as const;
 
-export type DesignTokens = typeof tokens;
+export type DesignTokens = typeof legacyTokens;

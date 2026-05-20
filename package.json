@@ -21,7 +21,13 @@
     "compose:logs": "docker compose -f infra/docker/docker-compose.yml logs -f",
     "db:migrate": "pnpm --filter @encore/db migrate",
     "db:seed": "pnpm --filter @encore/db seed",
-    "seed:catalog": "pnpm --filter @encore/seed-catalog seed -- --source=all --limit=50"
+    "seed:catalog": "pnpm --filter @encore/seed-catalog seed -- --source=all --limit=50",
+    "swarm:seed": "pnpm --filter @encore/agents-system seed",
+    "swarm:cycle": "pnpm --filter @encore/agents-system cycle",
+    "swarm:dry-run": "pnpm --filter @encore/agents-system cycle -- --dry-run",
+    "swarm:daemon": "pnpm --filter @encore/agents-system daemon",
+    "swarm:status": "pnpm --filter @encore/agents-system status",
+    "agents:cycle": "node agents/encore/cycle.js"
   },
   "devDependencies": {
     "turbo": "^2.1.3",

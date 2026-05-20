@@ -7,12 +7,13 @@ export default async function PodcastPage({
 }): Promise<JSX.Element> {
   const { id } = await params;
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Podcast</h1>
-      <p className="text-ink-muted text-sm">feed id: {id}</p>
-      <p>
-        Podcast detail page scaffold. Wire to backend podcast endpoints once
-        the RSS poller has indexed episodes.
+    <div className="encore-page max-w-prose-wide">
+      <header className="encore-page-header">
+        <h1 className="encore-page-title">Podcast</h1>
+        <p className="text-sm text-ink-dim dark:text-[#888894] font-mono">feed id: {id}</p>
+      </header>
+      <p className="text-base text-ink-muted dark:text-[#c0c0ca] leading-relaxed m-0">
+        Podcast detail scaffold. Wire to backend once RSS poller has indexed episodes.
       </p>
     </div>
   );

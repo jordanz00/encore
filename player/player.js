@@ -4,6 +4,8 @@
   const params = new URLSearchParams(location.search);
   const IS_SHOWCASE = params.get('showcase') === '1' || params.get('embed') === '1';
   const IS_EMBED = params.get('embed') === '1';
+  const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const a11yLive = () => document.getElementById('a11y-live');
 
   const ECON = { perPlay: 0.024, album: 9.71 };
 
@@ -292,6 +294,12 @@
       audio.currentTime = pos;
     }
   }
+  function announce(msg) {
+    if (!msg) return;
+    const el = a11yLive();
+    if (el) el.textContent = msg;
+  }
+
   function toast(msg) {
     if (!el.toast) return;
     el.toast.textContent = msg;
@@ -778,8 +786,7 @@
     const canvas = el.viz;
     if (!canvas) return;
 
-    const loop = () => {
-      raf = requestAnimationFrame(loop);
+    const paintFrame = () => {
       const { g, w, h } = resizeVizCanvas(canvas);
       g.clearRect(0, 0, w, h);
 
@@ -802,7 +809,16 @@
 
       drawWaveform(g, w, h, peaks, progress);
     };
+
     cancelAnimationFrame(raf);
+    if (REDUCED_MOTION) {
+      paintFrame();
+      return;
+    }
+    const loop = () => {
+      raf = requestAnimationFrame(loop);
+      paintFrame();
+    };
     loop();
   }
 
@@ -834,6 +850,8 @@
       await audio.play();
       setBuffering(false);
       document.body.classList.add('is-playing');
+      if (el.play) el.play.setAttribute('aria-label', 'Pause');
+      announce('Playing ' + (t.title || 'track'));
       creditPlay(t);
     } catch (e) {
       setBuffering(false);
@@ -997,6 +1015,7 @@
   });
   audio.addEventListener('pause', () => {
     document.body.classList.remove('is-playing');
+    if (el.play) el.play.setAttribute('aria-label', 'Play');
     updateStatusPill();
   });
   audio.addEventListener('error', () => {

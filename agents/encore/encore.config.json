@@ -1,0 +1,12 @@
+{
+  "intervalMs": 300000,
+  "maxApplyPerCycle": 15,
+  "minScoreToApply": 5.5,
+  "corporationEnabled": true,
+  "supervisors": 5,
+  "agentsPerSupervisor": 10,
+  "runLegacyWaves": false,
+  "researchEachCycle": true,
+  "autoApply": true,
+  "selfUpgrade": true
+}

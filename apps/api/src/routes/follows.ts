@@ -1,11 +1,29 @@
 import type { FastifyInstance } from "fastify";
 import { z } from "zod";
 import { db, schema } from "@encore/db";
-import { and, eq } from "drizzle-orm";
+import { and, eq, desc } from "drizzle-orm";
 import { requireUser } from "../lib/auth.js";
 
 export async function registerFollows(app: FastifyInstance): Promise<void> {
   const schemaIn = z.object({ artistId: z.string().uuid() });
+
+  app.get("/me", async (req) => {
+    const user = await requireUser(req);
+    const rows = await db
+      .select({
+        id: schema.artists.id,
+        slug: schema.artists.slug,
+        name: schema.artists.name,
+        bio: schema.artists.bio,
+        avatarKey: schema.artists.avatarKey,
+        followedAt: schema.follows.createdAt,
+      })
+      .from(schema.follows)
+      .innerJoin(schema.artists, eq(schema.follows.artistId, schema.artists.id))
+      .where(eq(schema.follows.followerUserId, user.id))
+      .orderBy(desc(schema.follows.createdAt));
+    return { artists: rows };
+  });
 
   app.post("/", async (req) => {
     const user = await requireUser(req);

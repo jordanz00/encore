@@ -200,6 +200,10 @@ export const artists = pgTable(
     musicbrainzId: varchar("musicbrainz_id", { length: 36 }),
     /** ActivityPub actor IRI for fediverse identity (RFC 005). */
     actorIri: text("actor_iri"),
+    /** RSA public key (PEM). Beta: stored in DB; production should use a secrets manager. */
+    actorPublicKeyPem: text("actor_public_key_pem"),
+    /** RSA private key (PEM). Beta only — rotate before public launch. */
+    actorPrivateKeyPem: text("actor_private_key_pem"),
     inboxUrl: text("inbox_url"),
     verified: boolean("verified").default(false).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
@@ -411,6 +415,27 @@ export const follows = pgTable(
   (t) => ({
     pk: primaryKey({ columns: [t.followerUserId, t.artistId] }),
     artistIdx: index("follows_artist_idx").on(t.artistId),
+  }),
+);
+
+/** Remote ActivityPub followers (inbox Follow activities). */
+export const remoteFollowers = pgTable(
+  "remote_followers",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    artistId: uuid("artist_id")
+      .notNull()
+      .references(() => artists.id, { onDelete: "cascade" }),
+    followerActorIri: text("follower_actor_iri").notNull(),
+    followerInboxUrl: text("follower_inbox_url"),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => ({
+    artistFollowerUq: uniqueIndex("remote_followers_artist_actor_uq").on(
+      t.artistId,
+      t.followerActorIri,
+    ),
+    artistIdx: index("remote_followers_artist_idx").on(t.artistId),
   }),
 );
 
@@ -760,6 +785,14 @@ export const artistWallets = pgTable("artist_wallets", {
   /** Minimum balance before auto cash-out fires (for "threshold" mode). */
   cashoutThresholdCents: integer("cashout_threshold_cents").default(0).notNull(),
   lastCashoutAt: timestamp("last_cashout_at", { withTimezone: true }),
+  /** Stripe Connect Express account id (acct_…). */
+  stripeConnectAccountId: varchar("stripe_connect_account_id", { length: 64 }),
+  /** not_started | pending | active | restricted */
+  stripeConnectStatus: varchar("stripe_connect_status", { length: 24 })
+    .default("not_started")
+    .notNull(),
+  stripeChargesEnabled: boolean("stripe_charges_enabled").default(false).notNull(),
+  stripePayoutsEnabled: boolean("stripe_payouts_enabled").default(false).notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });
@@ -791,6 +824,8 @@ export const walletLedger = pgTable(
     reason: varchar("reason", { length: 32 }).notNull(),
     sourceTable: varchar("source_table", { length: 64 }),
     sourceId: uuid("source_id"),
+    /** External idempotency key (e.g. Stripe checkout session id). */
+    sourceRef: varchar("source_ref", { length: 200 }),
     /** Human-readable note for the artist dashboard. */
     note: text("note"),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
@@ -798,6 +833,9 @@ export const walletLedger = pgTable(
   (t) => ({
     walletCreatedIdx: index("wallet_ledger_wallet_created_idx").on(t.walletId, t.createdAt),
     reasonIdx: index("wallet_ledger_reason_idx").on(t.reason),
+    sourceDedupUq: uniqueIndex("wallet_ledger_wallet_source_dedup_uq")
+      .on(t.walletId, t.sourceTable, t.sourceRef)
+      .where(sql`${t.sourceTable} is not null and ${t.sourceRef} is not null`),
   }),
 );
 
@@ -1067,3 +1105,30 @@ export const stipendDisbursements = pgTable("stipend_disbursements", {
   paidAt: timestamp("paid_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
+
+// ---------- Launch waitlist + beta invite codes (ship week) ----------
+
+export const waitlistEntries = pgTable(
+  "waitlist_entries",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    email: varchar("email", { length: 254 }).notNull().unique(),
+    /** "listener" | "artist" | "both" */
+    role: varchar("role", { length: 16 }).default("listener").notNull(),
+    source: varchar("source", { length: 64 }).default("landing").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+);
+
+export const betaInviteCodes = pgTable(
+  "beta_invite_codes",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    code: varchar("code", { length: 32 }).notNull().unique(),
+    maxUses: integer("max_uses").default(1).notNull(),
+    uses: integer("uses").default(0).notNull(),
+    note: varchar("note", { length: 200 }),
+    expiresAt: timestamp("expires_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+);

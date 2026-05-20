@@ -1,15 +1,14 @@
 export default function EditorialPage(): JSX.Element {
   return (
-    <div className="space-y-6">
-      <header>
-        <h1 className="text-3xl font-bold">Editorial</h1>
-        <p className="text-ink-muted">
-          Encore Editorial is a small, transparent team. We don&apos;t take
-          payola. We rotate slots. We label our picks.
+    <div className="encore-page">
+      <header className="encore-page-header">
+        <h1 className="encore-page-title">Editorial</h1>
+        <p className="encore-page-lead">
+          Small, transparent curation. No payola. Picks are labeled.
         </p>
       </header>
-      <div className="rounded-2xl border border-dashed border-black/10 dark:border-white/10 p-8 text-center text-ink-muted">
-        Editorial slots will appear here once the admin app populates them.
+      <div className="encore-muted-panel max-w-prose-wide">
+        Editorial slots appear here once the admin app populates them.
       </div>
     </div>
   );

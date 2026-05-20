@@ -36,6 +36,14 @@ storage/
 uploads/
 tmp/
 
+# Swarm local state (v3 task store + audit)
+data/swarm/queue.json
+data/swarm/task-store.json
+data/swarm/audit.jsonl
+data/swarm/staging/
+data/swarm/artifacts/
+apps/web/public/execution-status.json
+
 # Duplicate demo audio at repo root (canonical copy in player/demo/)
 Computer Machine - Complicated.mp3
 

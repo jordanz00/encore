@@ -1,6 +1,8 @@
 import { api } from "@/lib/api";
 import { notFound } from "next/navigation";
-import Player from "@/components/Player";
+import CheckoutActions from "@/components/CheckoutActions";
+import CoverArt from "@/components/CoverArt";
+import ReleaseExperience from "@/components/ReleaseExperience";
 
 export const dynamic = "force-dynamic";
 
@@ -19,36 +21,31 @@ export default async function ReleasePage({
   const { release, tracks } = data!;
 
   return (
-    <div className="space-y-8">
-      <header className="grid md:grid-cols-[200px_1fr] gap-6">
-        <div className="aspect-square rounded-xl bg-paper-soft dark:bg-white/5" />
-        <div>
-          <div className="text-sm uppercase tracking-wide text-ink-muted">
+    <div className="encore-page">
+      <header className="grid md:grid-cols-[220px_1fr] gap-8 items-start">
+        <CoverArt coverArtKey={release.coverArtKey} title={release.title} size="lg" />
+        <div className="space-y-4 max-w-prose-wide">
+          <div className="text-xs font-medium uppercase tracking-wide text-ink-dim dark:text-[#888894]">
             {release.type}
           </div>
-          <h1 className="text-3xl font-bold">{release.title}</h1>
+          <h1 className="encore-page-title">{release.title}</h1>
+          {tracks[0] && (
+            <div className="space-y-2">
+              <CheckoutActions
+                kind="track"
+                targetId={tracks[0].id}
+                label="Buy album (test checkout)"
+                amountCents={release.priceFloorCents ?? 999}
+              />
+              <p className="text-xs text-ink-dim dark:text-[#888894] m-0 leading-relaxed">
+                Requires sign-in. Stripe test mode when API keys are set.
+              </p>
+            </div>
+          )}
         </div>
       </header>
 
-      <section>
-        <h2 className="font-semibold mb-4">Tracks</h2>
-        <ol className="divide-y divide-black/5 dark:divide-white/10">
-          {tracks.map((t, i) => (
-            <li key={t.id} className="py-3 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <span className="text-ink-muted w-6 text-right">{i + 1}</span>
-                <span>{t.title}</span>
-              </div>
-              <span className="text-sm text-ink-muted">
-                {Math.floor(t.durationMs / 60000)}:
-                {String(Math.floor((t.durationMs % 60000) / 1000)).padStart(2, "0")}
-              </span>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <Player tracks={tracks} />
+      <ReleaseExperience releaseId={release.id} tracks={tracks} />
     </div>
   );
 }

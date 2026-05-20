@@ -1,0 +1,502 @@
+{
+  "product": "encore",
+  "timestamp": "2026-05-20T16:24:49.724Z",
+  "approved": [
+    {
+      "agentId": "wave-01-economics",
+      "wave": 1,
+      "id": "wave-01-economics-1779294289728-567c1",
+      "changeType": "implementation",
+      "targetFile": "apps/api/src/routes/payments.ts",
+      "description": "Wire Stripe Connect + wallet ledger per ROADMAP v0.3 (payments still stub)",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 10,
+        "economicsTrust": 10,
+        "designCraft": 5,
+        "securityPrivacy": 5,
+        "shipReadiness": 6
+      },
+      "conflictWith": [],
+      "instructions": [
+        "Implement webhook → wallet_ledger credit per ARTIST-INCOME-GUARANTEE §wallet."
+      ],
+      "sources": [
+        "ROADMAP.md",
+        "docs/rfcs/006-payments-payouts.md"
+      ],
+      "handlerKey": "payments.wallet-scaffold",
+      "timestamp": "2026-05-20T16:24:49.728Z"
+    },
+    {
+      "agentId": "wave-02-competitive",
+      "wave": 2,
+      "id": "wave-02-competitive-1779294289730-7pwta",
+      "changeType": "copy",
+      "targetFile": "landing.html",
+      "description": "Surface anti-token / anti-acquisition stance on landing (differentiator vs Audius)",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 8,
+        "economicsTrust": 8,
+        "designCraft": 7,
+        "securityPrivacy": 5,
+        "shipReadiness": 7
+      },
+      "conflictWith": [],
+      "instructions": [
+        "One line near federation block: no creator coin, AGPL fork is the real Encore."
+      ],
+      "sources": [
+        "PLATFORM-SUCCESS-STRATEGY.md §9"
+      ],
+      "handlerKey": "landing.anti-token",
+      "timestamp": "2026-05-20T16:24:49.730Z"
+    },
+    {
+      "agentId": "wave-07-ship-growth",
+      "wave": 7,
+      "id": "wave-07-ship-growth-1779294289734-q35si",
+      "changeType": "growth",
+      "targetFile": "docs/",
+      "description": "Onboard 5 cornerstone artists with 2+ releases each (ship day 3 — highest risk)",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 10,
+        "economicsTrust": 5,
+        "designCraft": 5,
+        "securityPrivacy": 5,
+        "shipReadiness": 10
+      },
+      "conflictWith": [],
+      "instructions": [],
+      "sources": [
+        "SHIP-PLAN-7-DAYS.md Day 3",
+        "PLATFORM-SUCCESS-STRATEGY.md §6"
+      ],
+      "handlerKey": null,
+      "timestamp": "2026-05-20T16:24:49.734Z"
+    },
+    {
+      "agentId": "wave-05-catalog-federation",
+      "wave": 5,
+      "id": "wave-05-catalog-federation-1779294289731-xz32z",
+      "changeType": "ops",
+      "targetFile": "packages/seed-catalog/",
+      "description": "Run production seed: FMA 200 + Internet Archive 200 + Jamendo 200",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 9,
+        "economicsTrust": 5,
+        "designCraft": 5,
+        "securityPrivacy": 5,
+        "shipReadiness": 10
+      },
+      "conflictWith": [],
+      "instructions": [
+        "pnpm seed:catalog on beta DB before launch checklist."
+      ],
+      "sources": [
+        "SHIP-PLAN-7-DAYS.md Day 2"
+      ],
+      "handlerKey": null,
+      "timestamp": "2026-05-20T16:24:49.731Z"
+    },
+    {
+      "agentId": "wave-03-product",
+      "wave": 3,
+      "id": "wave-03-product-1779294289731-gjjku",
+      "changeType": "ux",
+      "targetFile": "landing.html",
+      "description": "Hero CTA should point to live beta instance, not only static showcase player",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 7,
+        "economicsTrust": 5,
+        "designCraft": 8,
+        "securityPrivacy": 5,
+        "shipReadiness": 9
+      },
+      "conflictWith": [],
+      "instructions": [
+        "Primary CTA: https://beta.encore.audio (or staging URL) with fallback to embedded player."
+      ],
+      "sources": [
+        "SHIP-PLAN-7-DAYS.md §1"
+      ],
+      "handlerKey": "landing.beta-cta",
+      "timestamp": "2026-05-20T16:24:49.731Z"
+    },
+    {
+      "agentId": "wave-03-product",
+      "wave": 3,
+      "id": "wave-03-product-1779294289731-bpmyt",
+      "changeType": "a11y",
+      "targetFile": "landing.html",
+      "description": "Ship-week a11y pass: focus rings, skip link, reduced-motion on player controls",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 6,
+        "economicsTrust": 5,
+        "designCraft": 8,
+        "securityPrivacy": 6,
+        "shipReadiness": 9
+      },
+      "conflictWith": [],
+      "instructions": [],
+      "sources": [
+        "ACCESSIBILITY.md",
+        "SHIP-PLAN-7-DAYS.md Day 5"
+      ],
+      "handlerKey": "landing.reduced-motion",
+      "timestamp": "2026-05-20T16:24:49.731Z"
+    },
+    {
+      "agentId": "wave-04-platform",
+      "wave": 4,
+      "id": "wave-04-platform-1779294289731-8togy",
+      "changeType": "implementation",
+      "targetFile": "apps/worker/",
+      "description": "Verify ffmpeg transcode pipeline wired for upload → HLS + FLAC",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 8,
+        "economicsTrust": 5,
+        "designCraft": 5,
+        "securityPrivacy": 5,
+        "shipReadiness": 9
+      },
+      "conflictWith": [],
+      "instructions": [],
+      "sources": [
+        "docs/rfcs/003-audio-quality.md"
+      ],
+      "handlerKey": null,
+      "timestamp": "2026-05-20T16:24:49.731Z"
+    },
+    {
+      "agentId": "wave-03-product",
+      "wave": 3,
+      "id": "wave-03-product-1779294289731-vs06o",
+      "changeType": "design-system",
+      "targetFile": "landing.html",
+      "description": "Unify landing.css with packages/ui design tokens (single source of truth)",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 5,
+        "economicsTrust": 5,
+        "designCraft": 10,
+        "securityPrivacy": 5,
+        "shipReadiness": 8
+      },
+      "conflictWith": [],
+      "instructions": [
+        "Extract shared variables; landing and Next app must match typography scale."
+      ],
+      "sources": [],
+      "handlerKey": null,
+      "timestamp": "2026-05-20T16:24:49.731Z"
+    },
+    {
+      "agentId": "wave-05-catalog-federation",
+      "wave": 5,
+      "id": "wave-05-catalog-federation-1779294289731-yy74p",
+      "changeType": "implementation",
+      "targetFile": "apps/api/src/routes/subsonic.ts",
+      "description": "Ship Subsonic API for Symfonium/play:Sub (day 4 gate)",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 7,
+        "economicsTrust": 5,
+        "designCraft": 5,
+        "securityPrivacy": 5,
+        "shipReadiness": 10
+      },
+      "conflictWith": [],
+      "instructions": [],
+      "sources": [
+        "ROADMAP.md v0.6",
+        "SHIP-PLAN-7-DAYS.md Day 4"
+      ],
+      "handlerKey": null,
+      "timestamp": "2026-05-20T16:24:49.731Z"
+    },
+    {
+      "agentId": "wave-07-ship-growth",
+      "wave": 7,
+      "id": "wave-07-ship-growth-1779294289734-uhgw5",
+      "changeType": "trust",
+      "targetFile": "transparency/index.html",
+      "description": "Transparency page stub for pool rates (ROADMAP v0.4)",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 5,
+        "economicsTrust": 8,
+        "designCraft": 5,
+        "securityPrivacy": 5,
+        "shipReadiness": 8
+      },
+      "conflictWith": [],
+      "instructions": [],
+      "sources": [
+        "ROADMAP.md v0.4"
+      ],
+      "handlerKey": "stubs.transparency-page",
+      "timestamp": "2026-05-20T16:24:49.734Z"
+    },
+    {
+      "agentId": "wave-04-platform",
+      "wave": 4,
+      "id": "wave-04-platform-1779294289731-3pyag",
+      "changeType": "implementation",
+      "targetFile": "apps/web/",
+      "description": "Add HLS.js fallback for non-Safari browsers (ROADMAP v0.1)",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 7,
+        "economicsTrust": 5,
+        "designCraft": 6,
+        "securityPrivacy": 5,
+        "shipReadiness": 7
+      },
+      "conflictWith": [],
+      "instructions": [],
+      "sources": [
+        "ROADMAP.md v0.1"
+      ],
+      "handlerKey": null,
+      "timestamp": "2026-05-20T16:24:49.731Z"
+    },
+    {
+      "agentId": "wave-03-product",
+      "wave": 3,
+      "id": "wave-03-product-1779294289731-ra7ke",
+      "changeType": "design",
+      "targetFile": "landing.html",
+      "description": "Reduce decorative gradients — align landing with calm single-accent system (packages/ui)",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 5,
+        "economicsTrust": 5,
+        "designCraft": 9,
+        "securityPrivacy": 5,
+        "shipReadiness": 7
+      },
+      "conflictWith": [],
+      "instructions": [
+        "Import tokens from packages/ui; one accent; more whitespace; fewer competing shadows."
+      ],
+      "sources": [],
+      "handlerKey": null,
+      "timestamp": "2026-05-20T16:24:49.731Z"
+    },
+    {
+      "agentId": "wave-05-catalog-federation",
+      "wave": 5,
+      "id": "wave-05-catalog-federation-1779294289731-680e2",
+      "changeType": "process",
+      "targetFile": "CATALOG-PATHS.md",
+      "description": "DDEX parser is real — schedule distributor pilot (v0.5), not ship-week blocker",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 8,
+        "economicsTrust": 5,
+        "designCraft": 5,
+        "securityPrivacy": 5,
+        "shipReadiness": 5
+      },
+      "conflictWith": [],
+      "instructions": [],
+      "sources": [
+        "CATALOG-PATHS.md",
+        "docs/rfcs/002-ddex-ingest.md"
+      ],
+      "handlerKey": null,
+      "timestamp": "2026-05-20T16:24:49.731Z"
+    },
+    {
+      "agentId": "wave-06-security-privacy",
+      "wave": 6,
+      "id": "wave-06-security-privacy-1779294289732-yjquf",
+      "changeType": "process",
+      "targetFile": "SHIP-PLAN-7-DAYS.md",
+      "description": "Beta invite-code gate on signup (day 5) — anti-abuse before public scale",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 5,
+        "economicsTrust": 5,
+        "designCraft": 5,
+        "securityPrivacy": 8,
+        "shipReadiness": 9
+      },
+      "conflictWith": [],
+      "instructions": [],
+      "sources": [
+        "docs/roles/role-29.md",
+        "SHIP-PLAN-7-DAYS.md Day 5"
+      ],
+      "handlerKey": null,
+      "timestamp": "2026-05-20T16:24:49.732Z"
+    },
+    {
+      "agentId": "wave-07-ship-growth",
+      "wave": 7,
+      "id": "wave-07-ship-growth-1779294289734-r7yxd",
+      "changeType": "growth",
+      "targetFile": "encore.audio/press",
+      "description": "Press kit page: logo, screenshots, founder bio, fact sheet (ship day 6)",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 5,
+        "economicsTrust": 5,
+        "designCraft": 7,
+        "securityPrivacy": 5,
+        "shipReadiness": 9
+      },
+      "conflictWith": [],
+      "instructions": [],
+      "sources": [
+        "SHIP-PLAN-7-DAYS.md Day 6"
+      ],
+      "handlerKey": "stubs.press-kit",
+      "timestamp": "2026-05-20T16:24:49.734Z"
+    },
+    {
+      "agentId": "wave-04-platform",
+      "wave": 4,
+      "id": "wave-04-platform-1779294289731-elniq",
+      "changeType": "implementation",
+      "targetFile": "apps/api/src/routes/health.ts",
+      "description": "Expose /health with version SHA for ship checklist",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 5,
+        "economicsTrust": 5,
+        "designCraft": 5,
+        "securityPrivacy": 7,
+        "shipReadiness": 10
+      },
+      "conflictWith": [],
+      "instructions": [],
+      "sources": [
+        "SHIP-PLAN-7-DAYS.md §4 pre-launch checklist"
+      ],
+      "handlerKey": null,
+      "timestamp": "2026-05-20T16:24:49.731Z"
+    },
+    {
+      "agentId": "wave-07-ship-growth",
+      "wave": 7,
+      "id": "wave-07-ship-growth-1779294289734-nphau",
+      "changeType": "growth",
+      "targetFile": "apps/api/src/routes/waitlist.ts",
+      "description": "Waitlist endpoint + CSV export (ship day 1)",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 5,
+        "economicsTrust": 5,
+        "designCraft": 5,
+        "securityPrivacy": 5,
+        "shipReadiness": 10
+      },
+      "conflictWith": [],
+      "instructions": [
+        "POST /waitlist → waitlist table; admin export for launch audience."
+      ],
+      "sources": [
+        "SHIP-PLAN-7-DAYS.md Day 1"
+      ],
+      "handlerKey": "stubs.waitlist-route",
+      "timestamp": "2026-05-20T16:24:49.734Z"
+    },
+    {
+      "agentId": "wave-02-competitive",
+      "wave": 2,
+      "id": "wave-02-competitive-1779294289730-tzak6",
+      "changeType": "process",
+      "targetFile": "docs/roles/role-01.md",
+      "description": "Quarterly refresh Spotify/Apple/Bandcamp audits (roles 01–04) after launch metrics",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 6,
+        "economicsTrust": 6,
+        "designCraft": 5,
+        "securityPrivacy": 5,
+        "shipReadiness": 4
+      },
+      "conflictWith": [],
+      "instructions": [
+        "Schedule post-beta competitive diff vs landing comparison table."
+      ],
+      "sources": [],
+      "handlerKey": null,
+      "timestamp": "2026-05-20T16:24:49.730Z"
+    },
+    {
+      "agentId": "wave-05-catalog-federation",
+      "wave": 5,
+      "id": "wave-05-catalog-federation-1779294289731-r3r8b",
+      "changeType": "implementation",
+      "targetFile": "packages/activitypub/",
+      "description": "ActivityPub primitives must pass Mastodon interop on ship day 4",
+      "impactScore": 5,
+      "scores": {
+        "artistImpact": 5,
+        "economicsTrust": 5,
+        "designCraft": 5,
+        "securityPrivacy": 5,
+        "shipReadiness": 9
+      },
+      "conflictWith": [],
+      "instructions": [],
+      "sources": [
+        "docs/rfcs/005-federation.md",
+        "SHIP-PLAN-7-DAYS.md Day 4"
+      ],
+      "handlerKey": null,
+      "timestamp": "2026-05-20T16:24:49.731Z"
+    }
+  ],
+  "report": {
+    "totalReceived": 19,
+    "afterConflictResolution": 19,
+    "approved": 19,
+    "topFive": [
+      {
+        "id": "wave-01-economics-1779294289728-567c1",
+        "agentId": "wave-01-economics",
+        "description": "Wire Stripe Connect + wallet ledger per ROADMAP v0.3 (payments still stub)",
+        "targetFile": "apps/api/src/routes/payments.ts",
+        "weightedScore": 7.9
+      },
+      {
+        "id": "wave-02-competitive-1779294289730-7pwta",
+        "agentId": "wave-02-competitive",
+        "description": "Surface anti-token / anti-acquisition stance on landing (differentiator vs Audius)",
+        "targetFile": "landing.html",
+        "weightedScore": 7.3
+      },
+      {
+        "id": "wave-07-ship-growth-1779294289734-q35si",
+        "agentId": "wave-07-ship-growth",
+        "description": "Onboard 5 cornerstone artists with 2+ releases each (ship day 3 — highest risk)",
+        "targetFile": "docs/",
+        "weightedScore": 7
+      },
+      {
+        "id": "wave-05-catalog-federation-1779294289731-xz32z",
+        "agentId": "wave-05-catalog-federation",
+        "description": "Run production seed: FMA 200 + Internet Archive 200 + Jamendo 200",
+        "targetFile": "packages/seed-catalog/",
+        "weightedScore": 6.7
+      },
+      {
+        "id": "wave-03-product-1779294289731-gjjku",
+        "agentId": "wave-03-product",
+        "description": "Hero CTA should point to live beta instance, not only static showcase player",
+        "targetFile": "landing.html",
+        "weightedScore": 6.6
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+/**
+ * Shim — canonical system: packages/ui-system
+ */
+@import "../packages/ui-system/styles/ui-system.css";
+
+/* Legacy class aliases (landing + execution panel) */
+.apple-h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+.apple-h2 { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 2.5rem); font-weight: 600; line-height: 1.2; }
+.apple-h3 { font-family: var(--font-system); font-size: 1.25rem; font-weight: 500; line-height: 1.35; }
+.apple-body { font-family: var(--font-system); font-size: 1.0625rem; line-height: 1.55; }
+.apple-caption { font-family: var(--font-system); font-size: 0.8125rem; opacity: 0.65; }
+.encore-apple-card {
+  border-radius: var(--space-3);
+  border: 1px solid var(--ui-border);
+  background: var(--ui-surface);
+  padding: var(--space-4);
+}
+.encore-exec-pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--ui-accent); animation: encore-ui-glow-pulse 1.2s var(--ease-smooth) infinite; }
+.encore-exec-rejected { color: var(--ui-fail); }
+.encore-exec-complete { color: var(--ui-success); }

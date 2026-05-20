@@ -1,0 +1,465 @@
+{
+  "cycle": 291,
+  "timestamp": "2026-05-20T19:02:01.803Z",
+  "meta": {
+    "metaId": "META-0",
+    "verdict": "PASS",
+    "supervisorFails": 0,
+    "supervisorWarns": 0,
+    "totalApproved": 14,
+    "approvedProposals": [
+      {
+        "agentId": "EXE-01",
+        "wave": 0,
+        "id": "EXE-01-1779303721802-v7azg",
+        "changeType": "auto-apply",
+        "targetFile": "FUNDING.md",
+        "description": "Funding: apply stubs.transparency-page",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "stubs.transparency-page",
+        "timestamp": "2026-05-20T19:02:01.802Z",
+        "supervisorId": "SUP-EXE",
+        "agentName": "Funding",
+        "division": "SUP-EXE",
+        "metaApproved": true
+      },
+      {
+        "agentId": "EXE-07",
+        "wave": 0,
+        "id": "EXE-07-1779303721802-lik5s",
+        "changeType": "auto-apply",
+        "targetFile": "SHIP-PLAN-7-DAYS.md",
+        "description": "Ship Plan: apply stubs.press-kit",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "stubs.press-kit",
+        "timestamp": "2026-05-20T19:02:01.802Z",
+        "supervisorId": "SUP-EXE",
+        "agentName": "Ship Plan",
+        "division": "SUP-EXE",
+        "metaApproved": true
+      },
+      {
+        "agentId": "EXE-07",
+        "wave": 0,
+        "id": "EXE-07-1779303721802-aokiy",
+        "changeType": "corp",
+        "targetFile": "press/index.html",
+        "description": "Ship Plan: press kit page",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 6,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "stubs.press-kit",
+        "timestamp": "2026-05-20T19:02:01.802Z",
+        "supervisorId": "SUP-EXE",
+        "agentName": "Ship Plan",
+        "division": "SUP-EXE",
+        "metaApproved": true
+      },
+      {
+        "agentId": "EXE-10",
+        "wave": 0,
+        "id": "EXE-10-1779303721802-77f16",
+        "changeType": "auto-apply",
+        "targetFile": "ARTIST-ECONOMICS.md",
+        "description": "Artist Economics Doc: apply landing.guarantee-link",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "landing.guarantee-link",
+        "timestamp": "2026-05-20T19:02:01.802Z",
+        "supervisorId": "SUP-EXE",
+        "agentName": "Artist Economics Doc",
+        "division": "SUP-EXE",
+        "metaApproved": true
+      },
+      {
+        "agentId": "ENG-03",
+        "wave": 0,
+        "id": "ENG-03-1779303721802-76ak7",
+        "changeType": "auto-apply",
+        "targetFile": "apps/api/src/routes/payments.ts",
+        "description": "Payments Route: apply payments.wallet-scaffold",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "payments.wallet-scaffold",
+        "timestamp": "2026-05-20T19:02:01.802Z",
+        "supervisorId": "SUP-ENG",
+        "agentName": "Payments Route",
+        "division": "SUP-ENG",
+        "metaApproved": true
+      },
+      {
+        "agentId": "ENG-09",
+        "wave": 0,
+        "id": "ENG-09-1779303721802-f02px",
+        "changeType": "auto-apply",
+        "targetFile": "apps/api/src/routes/waitlist.ts",
+        "description": "Waitlist API: apply stubs.waitlist-route",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "stubs.waitlist-route",
+        "timestamp": "2026-05-20T19:02:01.802Z",
+        "supervisorId": "SUP-ENG",
+        "agentName": "Waitlist API",
+        "division": "SUP-ENG",
+        "metaApproved": true
+      },
+      {
+        "agentId": "ENG-10",
+        "wave": 0,
+        "id": "ENG-10-1779303721802-82e55",
+        "changeType": "auto-apply",
+        "targetFile": "apps/web/package.json",
+        "description": "Web App: apply landing.beta-cta",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "landing.beta-cta",
+        "timestamp": "2026-05-20T19:02:01.802Z",
+        "supervisorId": "SUP-ENG",
+        "agentName": "Web App",
+        "division": "SUP-ENG",
+        "metaApproved": true
+      },
+      {
+        "agentId": "PRD-01",
+        "wave": 0,
+        "id": "PRD-01-1779303721802-v7vyb",
+        "changeType": "auto-apply",
+        "targetFile": "landing.html",
+        "description": "Landing Hero: apply landing.beta-cta",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "landing.beta-cta",
+        "timestamp": "2026-05-20T19:02:01.802Z",
+        "supervisorId": "SUP-PRD",
+        "agentName": "Landing Hero",
+        "division": "SUP-PRD",
+        "metaApproved": true
+      },
+      {
+        "agentId": "PRD-02",
+        "wave": 0,
+        "id": "PRD-02-1779303721802-uln25",
+        "changeType": "auto-apply",
+        "targetFile": "landing.html",
+        "description": "Landing Trust: apply landing.anti-token",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "landing.anti-token",
+        "timestamp": "2026-05-20T19:02:01.802Z",
+        "supervisorId": "SUP-PRD",
+        "agentName": "Landing Trust",
+        "division": "SUP-PRD",
+        "metaApproved": true
+      },
+      {
+        "agentId": "PRD-03",
+        "wave": 0,
+        "id": "PRD-03-1779303721802-zh6hv",
+        "changeType": "auto-apply",
+        "targetFile": "landing.html",
+        "description": "Demo Labeling: apply landing.demo-sandbox-note",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "landing.demo-sandbox-note",
+        "timestamp": "2026-05-20T19:02:01.802Z",
+        "supervisorId": "SUP-PRD",
+        "agentName": "Demo Labeling",
+        "division": "SUP-PRD",
+        "metaApproved": true
+      },
+      {
+        "agentId": "PRD-04",
+        "wave": 0,
+        "id": "PRD-04-1779303721803-wkxag",
+        "changeType": "auto-apply",
+        "targetFile": "landing.html",
+        "description": "Reduced Motion: apply landing.reduced-motion",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "landing.reduced-motion",
+        "timestamp": "2026-05-20T19:02:01.803Z",
+        "supervisorId": "SUP-PRD",
+        "agentName": "Reduced Motion",
+        "division": "SUP-PRD",
+        "metaApproved": true
+      },
+      {
+        "agentId": "PRD-09",
+        "wave": 0,
+        "id": "PRD-09-1779303721803-ou8fn",
+        "changeType": "auto-apply",
+        "targetFile": "landing.html",
+        "description": "Fan Trust UI: apply landing.guarantee-link",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "landing.guarantee-link",
+        "timestamp": "2026-05-20T19:02:01.803Z",
+        "supervisorId": "SUP-PRD",
+        "agentName": "Fan Trust UI",
+        "division": "SUP-PRD",
+        "metaApproved": true
+      },
+      {
+        "agentId": "TRU-05",
+        "wave": 0,
+        "id": "TRU-05-1779303721803-tho3z",
+        "changeType": "auto-apply",
+        "targetFile": "transparency/index.html",
+        "description": "Transparency Page: apply stubs.transparency-page",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "stubs.transparency-page",
+        "timestamp": "2026-05-20T19:02:01.803Z",
+        "supervisorId": "SUP-TRU",
+        "agentName": "Transparency Page",
+        "division": "SUP-TRU",
+        "metaApproved": true
+      },
+      {
+        "agentId": "TRU-10",
+        "wave": 0,
+        "id": "TRU-10-1779303721803-dp7aq",
+        "changeType": "auto-apply",
+        "targetFile": "PLATFORM-SUCCESS-STRATEGY.md",
+        "description": "No Token Policy: apply landing.anti-token",
+        "impactScore": 5,
+        "scores": {
+          "artistImpact": 7,
+          "economicsTrust": 6,
+          "designCraft": 5,
+          "securityPrivacy": 6,
+          "shipReadiness": 8
+        },
+        "conflictWith": [],
+        "instructions": [],
+        "sources": [],
+        "handlerKey": "landing.anti-token",
+        "timestamp": "2026-05-20T19:02:01.803Z",
+        "supervisorId": "SUP-TRU",
+        "agentName": "No Token Policy",
+        "division": "SUP-TRU",
+        "metaApproved": true
+      }
+    ],
+    "digest": [
+      {
+        "id": "SUP-EXE",
+        "verdict": "PASS",
+        "approved": 4
+      },
+      {
+        "id": "SUP-ENG",
+        "verdict": "PASS",
+        "approved": 3
+      },
+      {
+        "id": "SUP-PRD",
+        "verdict": "PASS",
+        "approved": 5
+      },
+      {
+        "id": "SUP-TRU",
+        "verdict": "PASS",
+        "approved": 2
+      },
+      {
+        "id": "SUP-DIS",
+        "verdict": "PASS",
+        "approved": 0
+      }
+    ],
+    "summary": "META-0 PASS: 14 proposals cleared from 5 supervisors"
+  },
+  "crossSupervisorReviews": [
+    {
+      "reviewerSupervisor": "SUP-EXE",
+      "targetSupervisor": "SUP-ENG",
+      "verdict": "PASS",
+      "note": "SUP-EXE audited SUP-ENG",
+      "at": "2026-05-20T19:02:01.803Z"
+    },
+    {
+      "reviewerSupervisor": "SUP-ENG",
+      "targetSupervisor": "SUP-PRD",
+      "verdict": "PASS",
+      "note": "SUP-ENG audited SUP-PRD",
+      "at": "2026-05-20T19:02:01.803Z"
+    },
+    {
+      "reviewerSupervisor": "SUP-PRD",
+      "targetSupervisor": "SUP-TRU",
+      "verdict": "PASS",
+      "note": "SUP-PRD audited SUP-TRU",
+      "at": "2026-05-20T19:02:01.803Z"
+    },
+    {
+      "reviewerSupervisor": "SUP-TRU",
+      "targetSupervisor": "SUP-DIS",
+      "verdict": "PASS",
+      "note": "SUP-TRU audited SUP-DIS",
+      "at": "2026-05-20T19:02:01.803Z"
+    },
+    {
+      "reviewerSupervisor": "SUP-DIS",
+      "targetSupervisor": "SUP-EXE",
+      "verdict": "PASS",
+      "note": "SUP-DIS audited SUP-EXE",
+      "at": "2026-05-20T19:02:01.803Z"
+    }
+  ],
+  "divisions": [
+    {
+      "id": "SUP-EXE",
+      "supervisor": "PASS",
+      "crossPeer": "PASS",
+      "peerReviews": 10,
+      "agents": 10
+    },
+    {
+      "id": "SUP-ENG",
+      "supervisor": "PASS",
+      "crossPeer": "PASS",
+      "peerReviews": 10,
+      "agents": 10
+    },
+    {
+      "id": "SUP-PRD",
+      "supervisor": "PASS",
+      "crossPeer": "PASS",
+      "peerReviews": 10,
+      "agents": 10
+    },
+    {
+      "id": "SUP-TRU",
+      "supervisor": "PASS",
+      "crossPeer": "PASS",
+      "peerReviews": 10,
+      "agents": 10
+    },
+    {
+      "id": "SUP-DIS",
+      "supervisor": "PASS",
+      "crossPeer": "PASS",
+      "peerReviews": 10,
+      "agents": 10
+    }
+  ]
+}

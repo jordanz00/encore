@@ -1,40 +1,39 @@
 /**
- * Federation — ActivityPub bridge (RFC 005), REAL implementation.
+ * Federation — ActivityPub bridge (RFC 005).
  *
- * Public endpoints:
- *   GET  /.well-known/webfinger?resource=acct:slug@host  — actor discovery
- *   GET  /federation/users/:slug                         — Person actor JSON-LD
- *   GET  /federation/users/:slug/outbox                  — recent releases as Notes
- *   POST /federation/users/:slug/inbox                   — verified Follow/Like
- *
- * Disabled by default (ENABLE_ACTIVITYPUB=false). Per-artist opt-in even
- * when enabled — `artists.actorIri` must be populated for an artist to
- * federate.
+ * Register **without** a URL prefix so Webfinger and actor IRIs match
+ * `ACTIVITYPUB_BASE_URL/users/:slug` (Mastodon-compatible).
  */
 import type { FastifyInstance, FastifyRequest } from "fastify";
 import { db, schema } from "@encore/db";
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, sql } from "drizzle-orm";
 import {
   buildPersonActor,
   buildWebfingerResponse,
+  buildAcceptFollow,
   buildAnnounceCreateNote,
   generateActorKeyPair,
+  signRequest,
   verifyRequest,
 } from "@encore/activitypub";
+
+function coverUrl(baseUrl: string, key: string | null): string | null {
+  if (!key) return null;
+  return `${baseUrl}/media/images/${encodeURIComponent(key)}`;
+}
 
 export async function registerFederation(app: FastifyInstance): Promise<void> {
   const enabled = process.env.ENABLE_ACTIVITYPUB === "true";
   const baseUrl = process.env.ACTIVITYPUB_BASE_URL ?? "https://encore.local";
   const domain = new URL(baseUrl).host;
 
-  app.get("/", async () => ({
+  app.get("/federation", async () => ({
     enabled,
     spec: "https://www.w3.org/TR/activitypub/",
     baseUrl,
+    webfinger: `${baseUrl}/.well-known/webfinger`,
   }));
 
-  // .well-known/webfinger lives at the root, not under /federation, but
-  // Fastify allows registering it at the root prefix from this plugin.
   app.get("/.well-known/webfinger", async (req, reply) => {
     if (!enabled) return reply.code(404).send();
     const url = new URL(req.url, baseUrl);
@@ -54,7 +53,7 @@ export async function registerFederation(app: FastifyInstance): Promise<void> {
       .send(buildWebfingerResponse({ baseUrl, acct, artistSlug: artist.slug }));
   });
 
-  app.get("/federation/users/:slug", async (req, reply) => {
+  const actorHandler = async (req: FastifyRequest, reply: { code: (n: number) => { send: (b?: unknown) => void }; type: (t: string) => { send: (b: unknown) => void } }) => {
     if (!enabled) return reply.code(404).send();
     const { slug } = req.params as { slug: string };
     const [artist] = await db
@@ -64,7 +63,7 @@ export async function registerFederation(app: FastifyInstance): Promise<void> {
       .limit(1);
     if (!artist) return reply.code(404).send();
 
-    const config = await ensureActorKeys(artist.id);
+    const config = await ensureActorKeys(artist.id, artist.slug, baseUrl);
     return reply.type("application/activity+json").send(
       buildPersonActor({
         baseUrl,
@@ -72,14 +71,17 @@ export async function registerFederation(app: FastifyInstance): Promise<void> {
         preferredUsername: artist.slug,
         displayName: artist.name,
         summary: artist.bio,
-        iconUrl: artist.avatarKey ? `${baseUrl}/cdn/${artist.avatarKey}` : null,
-        bannerUrl: artist.bannerKey ? `${baseUrl}/cdn/${artist.bannerKey}` : null,
+        iconUrl: coverUrl(baseUrl, artist.avatarKey),
+        bannerUrl: coverUrl(baseUrl, artist.bannerKey),
         publicKeyPem: config.publicKeyPem,
       }),
     );
-  });
+  };
 
-  app.get("/federation/users/:slug/outbox", async (req, reply) => {
+  app.get("/users/:slug", actorHandler);
+  app.get("/federation/users/:slug", actorHandler);
+
+  const outboxHandler = async (req: FastifyRequest, reply: { code: (n: number) => { send: () => void }; type: (t: string) => { send: (b: unknown) => void } }) => {
     if (!enabled) return reply.code(404).send();
     const { slug } = req.params as { slug: string };
     const [artist] = await db
@@ -108,7 +110,7 @@ export async function registerFederation(app: FastifyInstance): Promise<void> {
         releaseId: r.id,
         releaseTitle: r.title,
         releaseUrl: `${baseUrl}/release/${r.id}`,
-        coverArtUrl: r.coverArtKey ? `${baseUrl}/cdn/${r.coverArtKey}` : null,
+        coverArtUrl: coverUrl(baseUrl, r.coverArtKey),
         publishedAt: r.publishedAt ?? r.createdAt,
       }),
     );
@@ -119,10 +121,21 @@ export async function registerFederation(app: FastifyInstance): Promise<void> {
       totalItems: items.length,
       orderedItems: items,
     });
-  });
+  };
 
-  app.post("/federation/users/:slug/inbox", async (req, reply) => {
+  app.get("/users/:slug/outbox", outboxHandler);
+  app.get("/federation/users/:slug/outbox", outboxHandler);
+
+  const inboxHandler = async (req: FastifyRequest, reply: { code: (n: number) => { send: (b: unknown) => void } }) => {
     if (!enabled) return reply.code(404).send();
+    const { slug } = req.params as { slug: string };
+    const [artist] = await db
+      .select({ id: schema.artists.id })
+      .from(schema.artists)
+      .where(eq(schema.artists.slug, slug))
+      .limit(1);
+    if (!artist) return reply.code(404).send({ error: "artist_not_found" });
+
     const rawBody = await collectRawBody(req);
     const verification = await verifyRequest({
       method: "POST",
@@ -134,30 +147,96 @@ export async function registerFederation(app: FastifyInstance): Promise<void> {
     if (!verification.ok) {
       return reply.code(401).send({ error: "signature_invalid", reason: verification.reason });
     }
-    const activity = JSON.parse(rawBody.toString("utf8"));
+    const activity = JSON.parse(rawBody.toString("utf8")) as {
+      type?: string;
+      actor?: string | { id?: string; inbox?: string };
+      object?: string | { id?: string };
+    };
     if (activity.type === "Follow") {
-      // Followers from the fediverse: store actorIri + inbox into a remote
-      // follower table (out of scope for the scaffold beyond accept).
-      return reply.code(202).send({ accepted: true, kind: "Follow" });
+      const followerActorIri = actorIri(activity.actor);
+      const followActivity = JSON.parse(rawBody.toString("utf8")) as Record<string, unknown>;
+      let inboxUrl =
+        typeof activity.actor === "object" && activity.actor?.inbox
+          ? String(activity.actor.inbox)
+          : null;
+      if (followerActorIri) {
+        if (!inboxUrl) inboxUrl = await resolveFollowerInbox(followerActorIri);
+        await db
+          .insert(schema.remoteFollowers)
+          .values({
+            artistId: artist.id,
+            followerActorIri,
+            followerInboxUrl: inboxUrl,
+          })
+          .onConflictDoNothing();
+        if (inboxUrl) {
+          const keys = await ensureActorKeys(artist.id, slug, baseUrl);
+          const keyId = `${baseUrl}/users/${slug}#main-key`;
+          void deliverAcceptFollow({
+            inboxUrl,
+            followActivity,
+            baseUrl,
+            artistSlug: slug,
+            privateKeyPem: keys.privateKeyPem,
+            keyId,
+          }).catch(() => undefined);
+        }
+      }
+      return reply.code(202).send({
+        accepted: true,
+        kind: "Follow",
+        stored: Boolean(followerActorIri),
+        acceptDelivered: Boolean(followerActorIri && inboxUrl),
+      });
     }
     if (activity.type === "Like" || activity.type === "Announce") {
       return reply.code(202).send({ accepted: true, kind: activity.type });
     }
     return reply.code(202).send({ accepted: true });
-  });
+  };
+
+  app.post("/users/:slug/inbox", inboxHandler);
+  app.post("/federation/users/:slug/inbox", inboxHandler);
 }
 
-/**
- * Lookup-or-mint per-artist RSA keypair. Stored on the artist row's
- * configuration JSON column would be cleaner; for the scaffold we lazy-mint
- * on first GET and return both keys to the caller.
- */
-async function ensureActorKeys(_artistId: string): Promise<{ publicKeyPem: string; privateKeyPem: string }> {
-  // Production: read from a `actor_keys` table or a secrets manager. For
-  // the scaffold we mint per call since the schema does not yet include
-  // a key column. The outbox worker receives the private key in the job
-  // payload to avoid re-minting.
-  return generateActorKeyPair();
+function actorIri(actor: unknown): string | null {
+  if (typeof actor === "string" && actor.startsWith("http")) return actor;
+  if (actor && typeof actor === "object" && "id" in actor) {
+    const id = (actor as { id?: string }).id;
+    if (typeof id === "string" && id.startsWith("http")) return id;
+  }
+  return null;
+}
+
+async function ensureActorKeys(
+  artistId: string,
+  slug: string,
+  baseUrl: string,
+): Promise<{ publicKeyPem: string; privateKeyPem: string }> {
+  const [row] = await db
+    .select({
+      publicKeyPem: schema.artists.actorPublicKeyPem,
+      privateKeyPem: schema.artists.actorPrivateKeyPem,
+    })
+    .from(schema.artists)
+    .where(eq(schema.artists.id, artistId))
+    .limit(1);
+
+  if (row?.publicKeyPem && row?.privateKeyPem) {
+    return { publicKeyPem: row.publicKeyPem, privateKeyPem: row.privateKeyPem };
+  }
+
+  const keys = generateActorKeyPair();
+  await db
+    .update(schema.artists)
+    .set({
+      actorPublicKeyPem: keys.publicKeyPem,
+      actorPrivateKeyPem: keys.privateKeyPem,
+      actorIri: `${baseUrl}/users/${slug}`,
+      updatedAt: new Date(),
+    })
+    .where(eq(schema.artists.id, artistId));
+  return keys;
 }
 
 async function resolveRemotePublicKey(keyId: string): Promise<string | null> {
@@ -172,6 +251,54 @@ async function resolveRemotePublicKey(keyId: string): Promise<string | null> {
   } catch {
     return null;
   }
+}
+
+const FED_USER_AGENT = "Encore-Federation/0.0.1";
+
+async function resolveFollowerInbox(actorIri: string): Promise<string | null> {
+  try {
+    const res = await fetch(actorIri, {
+      headers: { Accept: "application/activity+json", "User-Agent": FED_USER_AGENT },
+    });
+    if (!res.ok) return null;
+    const actor = (await res.json()) as { inbox?: string | string[] };
+    if (typeof actor.inbox === "string") return actor.inbox;
+    if (Array.isArray(actor.inbox) && typeof actor.inbox[0] === "string") {
+      return actor.inbox[0];
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+async function deliverAcceptFollow(opts: {
+  inboxUrl: string;
+  followActivity: Record<string, unknown>;
+  baseUrl: string;
+  artistSlug: string;
+  privateKeyPem: string;
+  keyId: string;
+}): Promise<{ ok: boolean; status?: number }> {
+  const accept = buildAcceptFollow({
+    baseUrl: opts.baseUrl,
+    artistSlug: opts.artistSlug,
+    followActivity: opts.followActivity,
+  });
+  const body = JSON.stringify(accept);
+  const headers = signRequest({
+    method: "POST",
+    url: opts.inboxUrl,
+    body,
+    privateKeyPem: opts.privateKeyPem,
+    keyId: opts.keyId,
+  });
+  const res = await fetch(opts.inboxUrl, {
+    method: "POST",
+    headers: { ...headers, "User-Agent": FED_USER_AGENT },
+    body,
+  });
+  return { ok: res.ok || res.status === 202, status: res.status };
 }
 
 async function collectRawBody(req: FastifyRequest): Promise<Buffer> {

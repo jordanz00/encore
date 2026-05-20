@@ -7,17 +7,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@0,6..72,500;0,6..72,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="design/encore-typography.css" />
+  <link rel="stylesheet" href="design/encore-a11y.css" />
   <style>
     :root {
       --paper: #faf6ec;
       --ink: #0a0908;
       --encore: #dc2626;
-      --muted: #3f3b36;
-      --font-d: "Newsreader", Georgia, serif;
-      --font-s: Inter, system-ui, sans-serif;
+      --muted: #3d3934;
+      --font-d: var(--font-display);
+      --font-s: var(--font-sans);
     }
     * { box-sizing: border-box; }
-    body { margin: 0; background: #e8e2d4; color: var(--ink); font-family: var(--font-s); font-size: 17px; line-height: 1.55; letter-spacing: -0.011em; -webkit-font-smoothing: antialiased; }
+    body { margin: 0; background: #e8e2d4; color: var(--ink); font-family: var(--font-s); font-size: var(--text-base); line-height: var(--leading-normal); }
     .toolbar {
       position: sticky; top: 0; z-index: 10;
       background: var(--ink); color: var(--paper);
@@ -46,30 +48,12 @@
     .slide h2 { font-size: 1.75rem; }
     .slide p, .slide li { color: var(--muted); font-size: 1.05rem; }
     .slide .lead { font-family: var(--font-d); font-size: 1.25rem; color: var(--ink); }
-    .eyebrow { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--encore); margin-bottom: 12px; display: block; }
+    .eyebrow { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--encore); margin-bottom: 12px; display: block; }
     .stat { font-family: var(--font-d); font-size: 4rem; color: var(--encore); line-height: 0.95; margin: 16px 0; }
     table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
     th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(10,9,8,0.1); }
     th { font-weight: 600; color: var(--ink); }
     .encore-col { background: rgba(220,38,38,0.06); font-weight: 600; }
-
-    .slide.compact p, .slide.compact li { font-size: 0.92rem; }
-    .slide.compact .lead { font-size: 1.05rem; }
-    .flow-box {
-      background: rgba(10,9,8,0.04);
-      border: 1px solid rgba(10,9,8,0.12);
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin: 16px 0;
-      font-size: 0.88rem;
-    }
-    .flow-box .line { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; border-bottom: 1px dashed rgba(10,9,8,0.08); }
-    .flow-box .line:last-child { border-bottom: none; font-weight: 600; color: var(--ink); }
-    .flow-box .amt { font-family: var(--font-d); font-variant-numeric: tabular-nums; }
-    .flow-box .sub { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
-    table.compact th, table.compact td { padding: 7px 10px; font-size: 0.875rem; }
-    .note-box { font-size: 0.8125rem; color: var(--muted); margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(10,9,8,0.1); }
-
     @media print {
       body { background: white; }
       .toolbar { display: none; }
@@ -78,6 +62,8 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <main id="main-content" tabindex="-1">
   <div class="toolbar">
     <span>Encore · Investor deck · May 2026</span>
     <span>
@@ -93,7 +79,7 @@
       <span class="eyebrow">Encore Foundation</span>
       <h1>Streaming,<br /><em style="color:var(--encore);font-style:italic;">the way artists would have built it.</em></h1>
       <p class="lead">Every play pays the artist. Open source. Foundation-owned. 0% platform fee on direct sales and tips.</p>
-      <p>Public beta · full player live at encore.audio · AGPL-3.0</p>
+      <p>Pre-alpha · working prototype at encore.audio · AGPL-3.0</p>
     </section>
     <section class="slide">
       <span class="eyebrow">Thesis</span>
@@ -123,35 +109,6 @@
         <tr><td>Open / federated</td><td>No</td><td>No</td><td class="encore-col">AGPL / ActivityPub</td></tr>
       </table>
     </section>
-
-    <section class="slide compact">
-      <span class="eyebrow">Business model</span>
-      <h2>How artists earn more</h2>
-      <p class="lead"><strong>Public beta</strong> — working player today. Payout rails scale with launch.</p>
-      <table class="compact">
-        <tr><th></th><th>Spotify</th><th class="encore-col">Encore</th></tr>
-        <tr><td>Per play</td><td>~$0.003</td><td class="encore-col">Every play earns</td></tr>
-        <tr><td>$10 album to artist</td><td>~3,500 streams</td><td class="encore-col"><strong>$9.71</strong></td></tr>
-        <tr><td>Platform fee on sales/tips</td><td>—</td><td class="encore-col"><strong>0%</strong></td></tr>
-      </table>
-      <p style="margin-top:16px;font-size:0.9rem;"><strong>Six income streams:</strong> sales · tips · listener subs (your fans only) · discovery pool · licensing · shows/merch</p>
-    </section>
-    <section class="slide compact">
-      <span class="eyebrow">Show your work</span>
-      <h2>Where fan money goes</h2>
-      <div class="flow-box">
-        <div class="line"><span>$10 album</span><span class="amt">$9.71 to artist</span></div>
-        <div class="line"><span>Card fee</span><span class="amt">−$0.29</span></div>
-        <div class="line"><span>Encore fee</span><span class="amt">$0.00</span></div>
-      </div>
-      <div class="flow-box">
-        <div class="line"><span>$9.99/mo subscription</span><span class="amt"></span></div>
-        <div class="line"><span>→ Artists that fan played (~70%)</span><span class="amt">$6.58</span></div>
-        <div class="line"><span>→ Discovery pool (all plays)</span><span class="amt">$1.00</span></div>
-        <div class="line"><span>→ Run the service</span><span class="amt">~$1.82</span></div>
-      </div>
-      <p class="note-box">Encore's bills: grants &amp; donations — not artist skims.</p>
-    </section>
     <section class="slide">
       <span class="eyebrow">The ask</span>
       <h2>$250K founding-patron round</h2>
@@ -164,5 +121,6 @@
       <p>Walkthrough: <a href="mailto:invest@encore.audio">invest@encore.audio</a></p>
     </section>
   </div>
+  </main>
 </body>
 </html>

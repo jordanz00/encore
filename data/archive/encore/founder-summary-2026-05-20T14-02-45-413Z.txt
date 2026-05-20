@@ -1,0 +1,9 @@
+Encore — Founder Summary (Multi-Agent Run)
+Generated: 2026-05-20T14:02:45.420Z
+
+Proposals: 18
+Approved: 18
+Founder average: 7.6
+
+Next: Review data/archive/encore/approved-changes-*.json
+Run: node agents/encore/run-waves.js after applying top items

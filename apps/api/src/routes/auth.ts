@@ -30,10 +30,32 @@ export async function registerAuth(app: FastifyInstance): Promise<void> {
       .max(32)
       .regex(/^[a-z0-9_-]+$/),
     displayName: z.string().min(1).max(80).optional(),
+    betaCode: z.string().min(4).max(32).optional(),
   });
 
   app.post("/sign-up", async (req, reply) => {
     const body = signUpSchema.parse(req.body);
+
+    if (process.env.BETA_SIGNUP_REQUIRED === "true") {
+      const code = body.betaCode?.trim().toUpperCase();
+      if (!code) return reply.code(403).send({ error: "beta_code_required" });
+      const [invite] = await db
+        .select()
+        .from(schema.betaInviteCodes)
+        .where(eq(schema.betaInviteCodes.code, code))
+        .limit(1);
+      if (!invite) return reply.code(403).send({ error: "invalid_beta_code" });
+      if (invite.expiresAt && invite.expiresAt < new Date()) {
+        return reply.code(403).send({ error: "beta_code_expired" });
+      }
+      if (invite.uses >= invite.maxUses) {
+        return reply.code(403).send({ error: "beta_code_exhausted" });
+      }
+      await db
+        .update(schema.betaInviteCodes)
+        .set({ uses: invite.uses + 1 })
+        .where(eq(schema.betaInviteCodes.id, invite.id));
+    }
     const passwordHash = await scrypt(body.password);
 
     const [user] = await db

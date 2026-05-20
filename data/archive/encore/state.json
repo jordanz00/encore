@@ -1,0 +1,11 @@
+{
+  "cycle": 349,
+  "appliedFingerprints": [],
+  "daemonStartedAt": "2026-05-20T18:16:05.925Z",
+  "lastCycleAt": "2026-05-20T19:02:02.048Z",
+  "agentSystemVersion": 3,
+  "lastAppliedCount": 0,
+  "lastCorpMeta": "PASS",
+  "corporationAgents": 50,
+  "corporationSupervisors": 5
+}

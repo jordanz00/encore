@@ -1,0 +1,238 @@
+/**
+ * @encore/ui-system — CSS surface (sync with src/tokens/*).
+ * Import: apps/web globals, design/encore-apple-system.css
+ */
+
+:root {
+  --font-system: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+  --font-display: "Newsreader", "SF Pro Display", ui-serif, Georgia, serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+
+  --ease-out-apple: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-micro: 150ms;
+  --duration-ui: 220ms;
+  --duration-page: 520ms;
+  --duration-data: 400ms;
+
+  --ui-bg-dark: #0b0c10;
+  --ui-surface: rgba(255, 255, 255, 0.04);
+  --ui-text-primary: rgba(255, 255, 255, 0.92);
+  --ui-text-secondary: rgba(255, 255, 255, 0.65);
+  --ui-text-tertiary: rgba(255, 255, 255, 0.4);
+  --ui-border: rgba(255, 255, 255, 0.08);
+  --ui-accent: #3b82f6;
+  --ui-accent-encore: #dc2626;
+  --ui-fail: rgba(248, 113, 113, 0.85);
+  --ui-success: rgba(74, 222, 128, 0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-micro: 0ms;
+    --duration-ui: 0ms;
+    --duration-page: 0ms;
+    --duration-data: 0ms;
+  }
+}
+
+/* Buttons */
+.encore-ui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  font-family: var(--font-system);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: 980px;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform var(--duration-ui) var(--ease-out-apple),
+    opacity var(--duration-micro) var(--ease-smooth),
+    box-shadow var(--duration-ui) var(--ease-smooth);
+}
+.encore-ui-btn:not(.encore-ui-btn--reduced):hover {
+  transform: translateY(-1px);
+}
+.encore-ui-btn:not(.encore-ui-btn--reduced):active {
+  transform: translateY(0) scale(0.98);
+}
+.encore-ui-btn:focus-visible {
+  outline: 2px solid var(--ui-accent);
+  outline-offset: 2px;
+}
+.encore-ui-btn--primary {
+  background: var(--ui-bg-dark);
+  color: #faf6ec;
+}
+.encore-ui-btn--secondary {
+  background: var(--ui-surface);
+  color: var(--ui-text-primary);
+  border: 1px solid var(--ui-border);
+}
+.encore-ui-btn--accent {
+  background: var(--ui-accent-encore);
+  color: #fff;
+}
+.encore-ui-btn--ghost {
+  background: transparent;
+  color: var(--ui-text-secondary);
+}
+
+/* Cards */
+.encore-ui-card {
+  border-radius: var(--space-3);
+  border: 1px solid var(--ui-border);
+  background: var(--ui-surface);
+  backdrop-filter: saturate(160%) blur(20px);
+  -webkit-backdrop-filter: saturate(160%) blur(20px);
+  padding: var(--space-4);
+}
+
+.encore-ui-container {
+  width: min(72rem, calc(100% - var(--space-6)));
+  margin-inline: auto;
+}
+
+/* Ambient — barely perceptible */
+.encore-ui-ambient {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.06;
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, var(--ui-accent), transparent 70%);
+  animation: encore-ui-ambient-drift 90s ease-in-out infinite alternate;
+}
+@keyframes encore-ui-ambient-drift {
+  from { transform: translate3d(-2%, 0, 0); }
+  to { transform: translate3d(2%, 1%, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .encore-ui-ambient { animation: none; opacity: 0.03; }
+}
+
+/* Task states — real data only */
+.encore-ui-task-state {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8125rem;
+  font-family: var(--font-system);
+}
+.encore-ui-task-state__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.encore-ui-task-state--queued .encore-ui-task-state__dot {
+  background: var(--ui-text-tertiary);
+  animation: encore-ui-pulse-dot 1.4s var(--ease-smooth) infinite;
+}
+.encore-ui-task-state--running .encore-ui-task-state__dot {
+  background: var(--ui-accent);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+  animation: encore-ui-glow-pulse 1.2s var(--ease-smooth) infinite;
+}
+.encore-ui-task-state--validating .encore-ui-task-state__dot {
+  background: linear-gradient(90deg, var(--ui-text-tertiary), var(--ui-accent), var(--ui-text-tertiary));
+  background-size: 200% 100%;
+  animation: encore-ui-shimmer 1.8s linear infinite;
+}
+.encore-ui-task-state--complete .encore-ui-task-state__dot {
+  background: var(--ui-success);
+}
+.encore-ui-task-state--failed .encore-ui-task-state__dot {
+  background: var(--ui-fail);
+}
+.encore-ui-task-state__log {
+  color: var(--ui-fail);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin-left: var(--space-1);
+}
+@keyframes encore-ui-pulse-dot {
+  0%, 100% { opacity: 0.45; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1); }
+}
+@keyframes encore-ui-glow-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+@keyframes encore-ui-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .encore-ui-task-state--queued .encore-ui-task-state__dot,
+  .encore-ui-task-state--running .encore-ui-task-state__dot,
+  .encore-ui-task-state--validating .encore-ui-task-state__dot {
+    animation: none;
+  }
+}
+
+/* Player progress */
+.encore-ui-progress__track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ui-border);
+  overflow: hidden;
+}
+.encore-ui-progress__fill {
+  height: 100%;
+  background: var(--ui-accent-encore);
+  border-radius: 2px;
+  transition: width 50ms linear;
+  will-change: width;
+}
+.encore-ui-progress__fill--active {
+  box-shadow: 0 0 8px rgba(220, 38, 38, 0.35);
+}
+.encore-ui-player {
+  font-family: var(--font-system);
+  padding: var(--space-4);
+  border-radius: var(--space-3);
+  background: var(--ui-bg-dark);
+  color: var(--ui-text-primary);
+}
+.encore-ui-player__row {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+.encore-ui-player__art {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--space-2);
+  object-fit: cover;
+  transition: transform var(--duration-ui) var(--ease-out-apple);
+}
+.encore-ui-player__art--playing {
+  transform: scale(1.03);
+}
+.encore-ui-player__art--placeholder {
+  background: var(--ui-surface);
+}
+.encore-ui-player__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.25;
+}
+.encore-ui-player__subtitle {
+  font-size: 0.75rem;
+  color: var(--ui-text-secondary);
+  margin: var(--space-1) 0 0;
+}

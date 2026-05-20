@@ -16,6 +16,7 @@ import {
   createVerify,
   generateKeyPairSync,
   createHash,
+  randomUUID,
 } from "node:crypto";
 
 export interface ActorKeyPair {
@@ -101,6 +102,30 @@ export interface ReleaseNoteInput {
   releaseUrl: string;
   coverArtUrl: string | null;
   publishedAt: Date;
+}
+
+export interface AcceptFollowInput {
+  baseUrl: string;
+  artistSlug: string;
+  /** Full inbound Follow activity (becomes Accept.object). */
+  followActivity: Record<string, unknown>;
+  /** Optional stable id; defaults to random UUID under baseUrl. */
+  acceptActivityId?: string;
+}
+
+/** Mastodon-compatible Accept for a stored Follow inbox activity. */
+export function buildAcceptFollow(input: AcceptFollowInput): Record<string, unknown> {
+  const actor = `${input.baseUrl}/users/${input.artistSlug}`;
+  const id =
+    input.acceptActivityId ??
+    `${input.baseUrl}/accepts/${randomUUID()}`;
+  return {
+    "@context": "https://www.w3.org/ns/activitystreams",
+    id,
+    type: "Accept",
+    actor,
+    object: input.followActivity,
+  };
 }
 
 export function buildAnnounceCreateNote(input: ReleaseNoteInput): Record<string, unknown> {

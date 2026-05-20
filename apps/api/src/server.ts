@@ -27,6 +27,10 @@ import { registerPodcastIngest } from "./routes/ingest-podcasts.js";
 import { registerDdexIngest } from "./routes/ingest-ddex.js";
 import { registerFederation } from "./routes/federation.js";
 import { registerRadio } from "./routes/radio.js";
+import { registerWaitlist } from "./routes/waitlist.js";
+import { registerSubsonic } from "./routes/subsonic.js";
+import { registerMedia } from "./routes/media.js";
+import { registerWallet } from "./routes/wallet.js";
 
 export async function buildServer(): Promise<FastifyInstance> {
   const app = Fastify({
@@ -76,10 +80,12 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(registerAds, { prefix: "/ads" });
   await app.register(registerPodcastIngest, { prefix: "/ingest/podcasts" });
   await app.register(registerDdexIngest, { prefix: "/ingest/ddex" });
-  await app.register(registerFederation, { prefix: "/federation" });
+  // ActivityPub: Webfinger + /users/* at host root (no prefix).
+  await app.register(registerFederation);
   await app.register(registerRadio, { prefix: "/radio" });
-  // Webfinger lives at the root, but the federation plugin registers it
-  // by absolute path so the prefix above does not matter for that route.
-
+  await app.register(registerWaitlist, { prefix: "/waitlist" });
+  await app.register(registerSubsonic, { prefix: "/rest" });
+  await app.register(registerMedia, { prefix: "/media" });
+  await app.register(registerWallet, { prefix: "/wallet" });
   return app;
 }

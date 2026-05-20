@@ -1,4 +1,8 @@
 /* Encore showcase player — base + mobile */
+@import url("../design/encore-typography.css");
+@import url("../design/encore-a11y.css");
+@import url("type-system.css");
+
 *, *::before, *::after { box-sizing: border-box; }
 html {
   -webkit-text-size-adjust: 100%;
@@ -8,8 +12,10 @@ html, body {
   margin: 0;
   height: 100%;
   background: #0a0908;
-  color: #faf6ec;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ink-on-dark);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   overscroll-behavior: none;
@@ -331,6 +337,24 @@ body.is-buffering .icon-pause { visibility: hidden; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .art { position: relative; }
+.art-buffer {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.art-buffer::after {
+  content: "";
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(250, 246, 236, 0.25);
+  border-top-color: #faf6ec;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
 .art-wrap.is-seek-flash .art { transform: scale(0.98); transition: transform 0.12s ease; }
 
 .playback-tools {

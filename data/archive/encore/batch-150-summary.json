@@ -1,0 +1,11 @@
+{
+  "batchCount": 150,
+  "startCycle": 198,
+  "endCycle": 349,
+  "uniqueHandlers": 7,
+  "totalProposalsSeen": 1500,
+  "totalFilesChanged": 4,
+  "sweepChanged": 4,
+  "elapsedMs": 861,
+  "completedAt": "2026-05-20T19:02:02.052Z"
+}

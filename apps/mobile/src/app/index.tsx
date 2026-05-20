@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ScrollView, Text, View, Pressable, RefreshControl } from "react-native";
+import { router } from "expo-router";
 import { Encore, type ApiRelease } from "@encore/sdk";
 
 const sdk = new Encore({
@@ -38,6 +39,22 @@ export default function DiscoverScreen(): JSX.Element {
       <Text style={{ color: "#7a7a85" }}>
         Chronological + editorial. No payola.
       </Text>
+      <Pressable
+        onPress={() => router.push("/search")}
+        accessibilityRole="button"
+        accessibilityLabel="Open search"
+        style={{
+          alignSelf: "flex-start",
+          minHeight: 44,
+          paddingHorizontal: 16,
+          paddingVertical: 10,
+          borderRadius: 20,
+          borderWidth: 1,
+          borderColor: "#444",
+        }}
+      >
+        <Text style={{ color: "#fafafa", fontWeight: "600" }}>Search</Text>
+      </Pressable>
       {releases.length === 0 ? (
         <View style={{ padding: 24, borderRadius: 12, borderWidth: 1, borderColor: "#222" }}>
           <Text style={{ color: "#7a7a85" }}>
@@ -49,7 +66,10 @@ export default function DiscoverScreen(): JSX.Element {
         releases.map((r) => (
           <Pressable
             key={r.id}
-            style={{ padding: 16, borderRadius: 12, backgroundColor: "#16161b" }}
+            onPress={() => router.push(`/release/${r.id}`)}
+            accessibilityRole="button"
+            accessibilityLabel={`Open release ${r.title}`}
+            style={{ padding: 16, borderRadius: 12, backgroundColor: "#16161b", minHeight: 44 }}
           >
             <Text style={{ color: "#fafafa", fontSize: 16, fontWeight: "600" }}>
               {r.title}

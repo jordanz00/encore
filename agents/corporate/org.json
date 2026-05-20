@@ -1,0 +1,430 @@
+{
+  "version": 5.559999999999925,
+  "metaSupervisor": "META-0",
+  "supervisors": [
+    {
+      "id": "SUP-EXE",
+      "title": "Executive Supervisor",
+      "agents": [
+        {
+          "id": "EXE-01",
+          "name": "Funding",
+          "files": [
+            "FUNDING.md",
+            "GOVERNANCE.md"
+          ],
+          "handler": "stubs.transparency-page"
+        },
+        {
+          "id": "EXE-02",
+          "name": "Brand",
+          "files": [
+            "BRAND-POSITIONING.md",
+            "landing.html"
+          ]
+        },
+        {
+          "id": "EXE-03",
+          "name": "Competitive Spotify",
+          "files": [
+            "docs/roles/role-01.md",
+            "COMPETITORS.md"
+          ]
+        },
+        {
+          "id": "EXE-04",
+          "name": "Competitive Apple",
+          "files": [
+            "docs/roles/role-02.md",
+            "COMPETITORS.md"
+          ]
+        },
+        {
+          "id": "EXE-05",
+          "name": "Competitive Bandcamp",
+          "files": [
+            "docs/roles/role-03.md",
+            "COMPETITORS.md"
+          ]
+        },
+        {
+          "id": "EXE-06",
+          "name": "Platform Strategy",
+          "files": [
+            "PLATFORM-SUCCESS-STRATEGY.md"
+          ]
+        },
+        {
+          "id": "EXE-07",
+          "name": "Ship Plan",
+          "files": [
+            "SHIP-PLAN-7-DAYS.md"
+          ],
+          "handler": "stubs.press-kit"
+        },
+        {
+          "id": "EXE-08",
+          "name": "Patron Round",
+          "files": [
+            "landing.html",
+            "investor-deck.html"
+          ]
+        },
+        {
+          "id": "EXE-09",
+          "name": "Global Launch",
+          "files": [
+            "GLOBAL-LAUNCH-PLAYBOOK.md"
+          ]
+        },
+        {
+          "id": "EXE-10",
+          "name": "Artist Economics Doc",
+          "files": [
+            "ARTIST-ECONOMICS.md",
+            "ARTIST-INCOME-GUARANTEE.md"
+          ],
+          "handler": "landing.guarantee-link"
+        }
+      ]
+    },
+    {
+      "id": "SUP-ENG",
+      "title": "Engineering Supervisor",
+      "agents": [
+        {
+          "id": "ENG-01",
+          "name": "Stack RFC",
+          "files": [
+            "docs/rfcs/001-stack.md",
+            "package.json"
+          ]
+        },
+        {
+          "id": "ENG-02",
+          "name": "API Health",
+          "files": [
+            "apps/api/src/routes/health.ts",
+            "apps/api/src/server.ts"
+          ]
+        },
+        {
+          "id": "ENG-03",
+          "name": "Payments Route",
+          "files": [
+            "apps/api/src/routes/payments.ts"
+          ],
+          "handler": "payments.wallet-scaffold"
+        },
+        {
+          "id": "ENG-04",
+          "name": "Audio Worker",
+          "files": [
+            "apps/worker/src/jobs/transcode.ts",
+            "packages/audio/src/index.ts"
+          ]
+        },
+        {
+          "id": "ENG-05",
+          "name": "Database Schema",
+          "files": [
+            "packages/db/src/schema.ts"
+          ]
+        },
+        {
+          "id": "ENG-06",
+          "name": "Federation API",
+          "files": [
+            "apps/api/src/routes/federation.ts",
+            "packages/activitypub"
+          ]
+        },
+        {
+          "id": "ENG-07",
+          "name": "Subsonic API",
+          "files": [
+            "apps/api/src/routes/subsonic.ts"
+          ]
+        },
+        {
+          "id": "ENG-08",
+          "name": "Docker Infra",
+          "files": [
+            "infra/docker/docker-compose.yml"
+          ]
+        },
+        {
+          "id": "ENG-09",
+          "name": "Waitlist API",
+          "files": [
+            "apps/api/src/routes/waitlist.ts"
+          ],
+          "handler": "stubs.waitlist-route",
+          "handlers": [
+            "stubs.waitlist-route",
+            "server.register-waitlist"
+          ]
+        },
+        {
+          "id": "ENG-10",
+          "name": "Web App",
+          "files": [
+            "apps/web/package.json",
+            "packages/ui/package.json"
+          ],
+          "handler": "landing.beta-cta"
+        }
+      ]
+    },
+    {
+      "id": "SUP-PRD",
+      "title": "Product Supervisor",
+      "agents": [
+        {
+          "id": "PRD-01",
+          "name": "Landing Hero",
+          "files": [
+            "landing.html"
+          ],
+          "handler": "landing.beta-cta"
+        },
+        {
+          "id": "PRD-02",
+          "name": "Landing Trust",
+          "files": [
+            "landing.html"
+          ],
+          "handler": "landing.anti-token"
+        },
+        {
+          "id": "PRD-03",
+          "name": "Demo Labeling",
+          "files": [
+            "landing.html"
+          ],
+          "handler": "landing.demo-sandbox-note"
+        },
+        {
+          "id": "PRD-04",
+          "name": "Reduced Motion",
+          "files": [
+            "landing.html"
+          ],
+          "handler": "landing.reduced-motion"
+        },
+        {
+          "id": "PRD-05",
+          "name": "Showcase Player",
+          "files": [
+            "player/index.html"
+          ]
+        },
+        {
+          "id": "PRD-06",
+          "name": "Investor Deck",
+          "files": [
+            "investor-deck.html"
+          ]
+        },
+        {
+          "id": "PRD-07",
+          "name": "Accessibility",
+          "files": [
+            "ACCESSIBILITY.md",
+            "landing.html"
+          ]
+        },
+        {
+          "id": "PRD-08",
+          "name": "Artist Onboarding",
+          "files": [
+            "apps/web",
+            "SHIP-PLAN-7-DAYS.md"
+          ]
+        },
+        {
+          "id": "PRD-09",
+          "name": "Fan Trust UI",
+          "files": [
+            "landing.html"
+          ],
+          "handler": "landing.guarantee-link"
+        },
+        {
+          "id": "PRD-10",
+          "name": "Design Tokens",
+          "files": [
+            "packages/ui",
+            "landing.html"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SUP-TRU",
+      "title": "Trust Supervisor",
+      "agents": [
+        {
+          "id": "TRU-01",
+          "name": "Security Policy",
+          "files": [
+            "SECURITY.md"
+          ]
+        },
+        {
+          "id": "TRU-02",
+          "name": "AGPL License",
+          "files": [
+            "LICENSE"
+          ]
+        },
+        {
+          "id": "TRU-03",
+          "name": "Privacy Defaults",
+          "files": [
+            "packages/db/src/schema.ts",
+            "docs/roles/role-28.md"
+          ]
+        },
+        {
+          "id": "TRU-04",
+          "name": "Economics Invariants",
+          "files": [
+            "packages/db/src/schema.ts",
+            "ARTIST-INCOME-GUARANTEE.md"
+          ]
+        },
+        {
+          "id": "TRU-05",
+          "name": "Transparency Page",
+          "files": [
+            "transparency/index.html"
+          ],
+          "handler": "stubs.transparency-page"
+        },
+        {
+          "id": "TRU-06",
+          "name": "DMCA Workflow",
+          "files": [
+            "docs/roles/role-26.md"
+          ]
+        },
+        {
+          "id": "TRU-07",
+          "name": "Moderation",
+          "files": [
+            "docs/roles/role-27.md"
+          ]
+        },
+        {
+          "id": "TRU-08",
+          "name": "Anti Abuse",
+          "files": [
+            "docs/roles/role-29.md"
+          ]
+        },
+        {
+          "id": "TRU-09",
+          "name": "Source Citations",
+          "files": [
+            "landing.html",
+            "ARTIST-ECONOMICS.md"
+          ]
+        },
+        {
+          "id": "TRU-10",
+          "name": "No Token Policy",
+          "files": [
+            "PLATFORM-SUCCESS-STRATEGY.md",
+            "landing.html"
+          ],
+          "handler": "landing.anti-token"
+        }
+      ]
+    },
+    {
+      "id": "SUP-DIS",
+      "title": "Discovery Supervisor",
+      "agents": [
+        {
+          "id": "DIS-01",
+          "name": "Seed Catalog",
+          "files": [
+            "packages/seed-catalog",
+            "CATALOG-PATHS.md"
+          ]
+        },
+        {
+          "id": "DIS-02",
+          "name": "DDEX Ingest",
+          "files": [
+            "packages/ingest-ddex",
+            "docs/rfcs/002-ddex-ingest.md"
+          ]
+        },
+        {
+          "id": "DIS-03",
+          "name": "Podcast Ingest",
+          "files": [
+            "packages/ingest-podcast",
+            "apps/api/src/routes/ingest-podcasts.ts"
+          ]
+        },
+        {
+          "id": "DIS-04",
+          "name": "Recommendations",
+          "files": [
+            "packages/recs",
+            "docs/rfcs/004-recommendations.md"
+          ]
+        },
+        {
+          "id": "DIS-05",
+          "name": "Radio Stations",
+          "files": [
+            "apps/api/src/routes/radio.ts",
+            "docs/roles/role-23.md"
+          ]
+        },
+        {
+          "id": "DIS-06",
+          "name": "Editorial",
+          "files": [
+            "docs/roles/role-22.md",
+            "apps/admin"
+          ]
+        },
+        {
+          "id": "DIS-07",
+          "name": "Playlists",
+          "files": [
+            "docs/roles/role-25.md"
+          ]
+        },
+        {
+          "id": "DIS-08",
+          "name": "New Artists",
+          "files": [
+            "docs/roles/role-24.md"
+          ]
+        },
+        {
+          "id": "DIS-09",
+          "name": "Federation Discovery",
+          "files": [
+            "docs/rfcs/005-federation.md"
+          ]
+        },
+        {
+          "id": "DIS-10",
+          "name": "Search",
+          "files": [
+            "apps/api/src/routes/search.ts"
+          ]
+        }
+      ]
+    }
+  ],
+  "cycle": 349,
+  "lastCycleUpgrade": "2026-05-20T19:02:02.048Z"
+}

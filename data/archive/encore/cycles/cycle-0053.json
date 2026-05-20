@@ -1,0 +1,13 @@
+{
+  "cycle": 53,
+  "timestamp": "2026-05-20T18:37:03.704Z",
+  "corporation": {
+    "agents": 50,
+    "supervisors": 5,
+    "metaVerdict": "PASS"
+  },
+  "proposals": 25,
+  "approved": 11,
+  "applied": 0,
+  "founderAverage": 7.6
+}

@@ -69,7 +69,15 @@ async function main(): Promise<void> {
     },
   ]);
 
-  console.log("[seed] done. demo user + artist + release created.");
+  const betaCodes = ["ENCORE-BETA-01", "ENCORE-BETA-02", "ENCORE-BETA-03"];
+  for (const code of betaCodes) {
+    await db
+      .insert(schema.betaInviteCodes)
+      .values({ code, maxUses: 100, note: "dev seed" })
+      .onConflictDoNothing();
+  }
+
+  console.log("[seed] done. demo user + artist + release + beta codes created.");
 }
 
 main().catch((err) => {

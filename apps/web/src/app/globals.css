@@ -1,21 +1,167 @@
+@import "../styles/encore-typography.css";
+@import "../styles/encore-a11y.css";
+@import "../styles/ui-system.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: light dark;
+@layer base {
+  :root {
+    color-scheme: light dark;
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Newsreader", ui-serif, Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  html {
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans text-base antialiased;
+    letter-spacing: -0.011em;
+  }
+
+  h1 {
+    @apply font-display text-hero font-semibold tracking-tight text-ink;
+  }
+  h2 {
+    @apply font-display text-3xl font-semibold tracking-tight text-ink;
+  }
+  h3 {
+    @apply font-display text-xl font-semibold tracking-tight text-ink;
+  }
+  h4 {
+    @apply font-sans text-lg font-semibold text-ink;
+  }
+
+  p {
+    @apply text-ink-muted leading-relaxed max-w-prose;
+  }
+
+  code {
+    @apply font-mono text-sm bg-paper-soft dark:bg-white/10 px-1.5 py-0.5 rounded;
+  }
+
+  label {
+    @apply text-sm font-medium text-ink;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply text-base leading-normal;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      @apply bg-[#0b0b0e] text-[#faf6ec];
+    }
+    p {
+      @apply text-[#c8c8d0];
+    }
+    h1, h2, h3, h4 {
+      @apply text-[#faf6ec];
+    }
+    label {
+      @apply text-[#e8e8ec];
+    }
+  }
 }
 
-html, body {
-  background: theme(colors.paper.DEFAULT);
-  color: theme(colors.ink.DEFAULT);
-  font-family: theme(fontFamily.sans);
-}
+@layer components {
+  .encore-container {
+    @apply max-w-screen-readable mx-auto w-full px-4 sm:px-6 lg:px-8;
+  }
 
-@media (prefers-color-scheme: dark) {
-  html, body {
-    background: #0b0b0e;
-    color: #fafafa;
+  .encore-page {
+    @apply space-y-10;
+  }
+
+  .encore-page-header {
+    @apply space-y-2 max-w-prose-wide;
+  }
+
+  .encore-page-title {
+    @apply font-display text-4xl font-semibold tracking-tight text-ink dark:text-[#faf6ec];
+  }
+
+  .encore-page-lead {
+    @apply text-lg text-ink-muted dark:text-[#b8b8c4] leading-relaxed;
+  }
+
+  .encore-card {
+    @apply rounded-2xl border border-black/[0.06] dark:border-white/10 p-6 bg-paper dark:bg-white/[0.03];
+    animation: encore-card-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes encore-card-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .encore-card {
+      animation: none;
+    }
+  }
+
+  .encore-muted-panel {
+    @apply rounded-2xl border border-dashed border-black/10 dark:border-white/15 p-8 text-center text-sm text-ink-muted dark:text-[#a8a8b4] leading-relaxed;
+  }
+
+  .encore-nav-link {
+    @apply inline-flex items-center min-h-11 px-1 text-sm font-medium text-ink-muted hover:text-ink
+      dark:text-[#c0c0ca] dark:hover:text-[#faf6ec] transition-colors
+      focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+
+  .encore-btn-primary {
+    @apply inline-flex items-center justify-center min-h-11 min-w-11 rounded-lg bg-ink text-paper px-4 py-2.5 text-sm font-semibold
+      disabled:opacity-50 disabled:cursor-not-allowed
+      focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent
+      dark:bg-[#faf6ec] dark:text-[#0a0908];
+    transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .encore-btn-primary:hover:not(:disabled) {
+    transform: translateY(-1px);
+    opacity: 0.92;
+  }
+  .encore-btn-primary:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .encore-btn-primary:hover:not(:disabled),
+    .encore-btn-primary:active:not(:disabled) {
+      transform: none;
+    }
+  }
+
+  .encore-btn-secondary {
+    @apply inline-flex items-center justify-center min-h-11 min-w-11 rounded-lg border border-black/10 dark:border-white/20
+      px-4 py-2.5 text-sm font-medium text-ink dark:text-[#faf6ec] hover:bg-paper-soft dark:hover:bg-white/5
+      focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+
+  .encore-input {
+    @apply mt-1.5 w-full min-h-11 rounded-lg border border-black/10 dark:border-white/20 bg-transparent
+      px-3 py-2.5 text-base text-ink dark:text-[#faf6ec]
+      placeholder:text-ink-dim dark:placeholder:text-[#a1a1ad]
+      focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-accent
+      focus-visible:border-accent;
+  }
+
+  .encore-sr-only {
+    @apply sr-only;
+  }
+
+  .encore-track-row {
+    @apply py-3.5 flex items-center justify-between gap-4 text-sm border-b border-black/5 dark:border-white/10 last:border-0;
   }
 }
 

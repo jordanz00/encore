@@ -1,0 +1,123 @@
+/**
+ * Encore — accessibility primitives (WCAG 2.2 AA baseline).
+ * Load after encore-typography.css on static pages; imported in apps/web globals.
+ */
+
+:root {
+  --a11y-focus-color: #dc2626;
+  --a11y-focus-width: 2px;
+  --a11y-focus-offset: 3px;
+  --a11y-min-target: 44px;
+  --a11y-skip-bg: #0a0908;
+  --a11y-skip-fg: #faf6ec;
+}
+
+/* Skip link — first focusable element */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  z-index: 10000;
+  padding: 0.65rem 1rem;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: var(--text-sm, 0.9375rem);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--a11y-skip-fg);
+  background: var(--a11y-skip-bg);
+  border-radius: 6px;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 0.15s ease;
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: var(--a11y-focus-width) solid var(--a11y-focus-color);
+  outline-offset: var(--a11y-focus-offset);
+}
+
+/* Never remove focus without replacement */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: var(--a11y-focus-width) solid var(--a11y-focus-color);
+  outline-offset: var(--a11y-focus-offset);
+}
+
+/* Minimum touch / click targets (WCAG 2.5.8) */
+.a11y-target,
+button,
+a.btn,
+.nav a,
+.tbtn,
+.ptool,
+.aw-tip,
+input[type="submit"],
+input[type="button"],
+select {
+  min-height: var(--a11y-min-target);
+  min-width: var(--a11y-min-target);
+}
+/* Compact icon buttons: padding expands hit area */
+.tbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Placeholders — not sole cue; sufficient contrast */
+::placeholder {
+  color: var(--ink-faint, #6b655c);
+  opacity: 1;
+}
+@media (prefers-color-scheme: dark) {
+  ::placeholder {
+    color: rgba(250, 246, 236, 0.55);
+  }
+}
+
+/* Disabled — not color-only */
+:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* Live regions */
+[aria-live="polite"],
+[aria-live="assertive"] {
+  /* ensure screen readers see updates */
+}
+
+/* Reduced motion — calm by default */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .skip-link {
+    transition: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: more) {
+  :focus-visible {
+    outline-width: 3px;
+  }
+  .skip-link {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Forced colors / Windows HC */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 3px solid CanvasText;
+  }
+}

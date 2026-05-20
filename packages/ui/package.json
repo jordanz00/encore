@@ -11,6 +11,9 @@
     "lint": "echo 'lint placeholder'",
     "clean": "rm -rf dist .turbo"
   },
+  "dependencies": {
+    "@encore/ui-system": "workspace:*"
+  },
   "peerDependencies": { "react": ">=18" },
   "devDependencies": {
     "@types/react": "^18.3.11",

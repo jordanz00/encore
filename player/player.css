@@ -331,24 +331,6 @@ body.is-buffering .icon-pause { visibility: hidden; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .art { position: relative; }
-.art-buffer {
-  position: absolute;
-  inset: 0;
-  border-radius: 14px;
-  background: rgba(0, 0, 0, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.art-buffer::after {
-  content: "";
-  width: 28px;
-  height: 28px;
-  border: 2px solid rgba(250, 246, 236, 0.25);
-  border-top-color: #faf6ec;
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
 .art-wrap.is-seek-flash .art { transform: scale(0.98); transition: transform 0.12s ease; }
 
 .playback-tools {

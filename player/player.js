@@ -51,7 +51,6 @@
     awAvatar: $('#aw-avatar'),
     artImg: $('#art-img'),
     artWrap: $('#art-wrap'),
-    artBuffer: $('#art-buffer'),
     toast: $('#toast'),
     viz: $('#viz'),
     shuffle: $('#btn-shuffle'),
@@ -159,7 +158,6 @@
 
   function setBuffering(on) {
     document.body.classList.toggle('is-buffering', on);
-    if (el.artBuffer) el.artBuffer.hidden = !on;
     updateStatusPill();
   }
 
@@ -1140,7 +1138,6 @@
     let lastTap = 0;
     let lastX = 0;
     el.artWrap.addEventListener('click', (e) => {
-      if (e.target.closest('.art-buffer')) return;
       const now = Date.now();
       const rect = el.artWrap.getBoundingClientRect();
       const x = e.clientX - rect.left;

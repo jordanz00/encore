@@ -81,7 +81,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--nav-h) + 16px); }
+    html { scroll-behavior: auto; -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--nav-h) + 16px); }
     body {
       margin: 0;
       background: var(--paper);
@@ -508,8 +508,12 @@
     .hero-metric-val.money { color: var(--money); }
     .hero-metric-lbl { font-size: var(--text-xs); line-height: 1.35; color: var(--ink-dim); }
 
-    .encore-player { position: relative; width: 100%; }
-    #player { position: absolute; top: -80px; }
+    .encore-player {
+      position: relative;
+      width: 100%;
+      scroll-margin-top: calc(var(--nav-h) + 16px);
+      overflow-anchor: none;
+    }
     .ep-live-shell {
       position: relative;
       border-radius: 22px;
@@ -578,18 +582,18 @@
     .ep-live-iframe {
       position: relative; z-index: 1;
       display: block; width: 100%;
-      height: 520px;
-      min-height: 0;
-      max-height: none;
+      height: 548px;
+      min-height: 548px;
+      max-height: 548px;
       border: 0;
       background: #0a0908;
-      transition: height 0.15s ease;
       overflow: hidden;
     }
     @media (max-width: 920px) {
       .ep-live-iframe {
-        height: 500px;
-        min-height: 0;
+        height: 528px;
+        min-height: 528px;
+        max-height: 528px;
       }
     }
     @media (max-width: 560px) {
@@ -605,9 +609,9 @@
       }
       .ep-live-hint { display: none; }
       .ep-live-iframe {
-        height: 480px;
-        min-height: 0;
-        max-height: none;
+        height: 508px;
+        min-height: 508px;
+        max-height: 508px;
       }
     }
     .ep-live-foot {
@@ -1599,7 +1603,7 @@
             </div>
             <div class="hero-ctas">
               <a href="investor-deck.html" class="btn btn-primary btn-lg">Investor deck →</a>
-              <a href="#player" class="btn btn-secondary btn-lg">Try live player</a>
+              <a href="#encore-player" class="btn btn-secondary btn-lg">Try live player</a>
             </div>
             <div class="hero-meta">
               <span><span class="dot"></span> Working software today</span>
@@ -1610,7 +1614,6 @@
           </div>
 
                     <div class="encore-player reveal in" id="encore-player">
-            <span id="player" aria-hidden="true"></span>
             <div class="player-frame ep-live-shell">
               <div class="ep-live-glow" aria-hidden="true"></div>
               <header class="ep-live-bar">
@@ -1729,6 +1732,7 @@
             <h3>Federated. AGPL. Can't be acquired.</h3>
             <p>ActivityPub federation. AGPL-3.0 source. Non-profit foundation. Founding texts bar using profits for weapons, war, or military tech. Own your audience — export it, move instances, keep your followers.</p>
             <span class="feature-tag">AGPL-3.0 · ActivityPub</span>
+            <p class="trust-strip" data-encore-anti-token="1" style="font-size:0.85rem;color:var(--ink-muted);max-width:42rem;"><strong>No creator coin. No token.</strong> AGPL-3.0 — if Encore ever breaks artist promises, the fork is the real platform. <a href="https://github.com/jordanz00/encore">Open source →</a></p>
           </article>
         </div>
       </div>
@@ -2112,17 +2116,37 @@
       );
       els.forEach(function (el) { io.observe(el); });
     })();
-      /* Live player iframe — auto height on mobile */
+    /* Prevent load-time scroll jump (iframe/layout restoration) */
     (function () {
-      var iframe = document.querySelector('.ep-live-iframe');
-      if (!iframe) return;
-      window.addEventListener('message', function (e) {
-        if (!e.data || e.data.type !== 'encore-player-height') return;
-        var h = Math.ceil(Number(e.data.height) + 2);
-        if (!h || h < 200) return;
-        iframe.style.height = h + 'px';
-        iframe.style.minHeight = '0';
-        iframe.style.maxHeight = 'none';
+      var hash = location.hash;
+      if (hash && hash.length > 1) return;
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      var pinUntil = Date.now() + 1400;
+      function pinTop() {
+        if (Date.now() > pinUntil) return;
+        if (window.scrollY !== 0) window.scrollTo(0, 0);
+      }
+      pinTop();
+      requestAnimationFrame(pinTop);
+      document.addEventListener('DOMContentLoaded', pinTop);
+      window.addEventListener('load', pinTop);
+      window.addEventListener('resize', pinTop);
+    })();
+
+    /* In-page nav: smooth scroll only on click, not on load */
+    (function () {
+      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        var href = a.getAttribute('href');
+        if (!href || href === '#') return;
+        a.addEventListener('click', function (e) {
+          var id = href.slice(1);
+          var target = document.getElementById(id);
+          if (!target) return;
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (history.replaceState) history.replaceState(null, '', href);
+          else location.hash = href;
+        });
       });
     })();
 

@@ -495,22 +495,25 @@ body.is-dragover .app {
   width: 18px;
   height: 18px;
   display: block;
+  flex-shrink: 0;
+}
+.vol-mute-slash {
+  opacity: 0;
+  pointer-events: none;
 }
 #btn-mute.is-muted .vol-waves {
   opacity: 0.2;
 }
-#btn-mute.is-muted::after {
-  content: "";
-  position: absolute;
-  width: 2px;
-  height: 18px;
-  background: currentColor;
-  transform: rotate(-45deg);
-  border-radius: 1px;
-  opacity: 0.7;
+#btn-mute.is-muted .vol-mute-slash {
+  opacity: 1;
 }
 #btn-mute {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  min-width: 40px;
 }
 
 .transport-shell {

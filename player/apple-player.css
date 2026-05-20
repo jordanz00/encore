@@ -40,7 +40,7 @@ body.is-embed {
 body.is-embed .app {
   min-height: 0;
   height: auto;
-  overflow: hidden;
+  overflow: visible;
 }
 
 body.is-embed .topbar {
@@ -50,8 +50,8 @@ body.is-embed .topbar {
 body.is-embed .stage {
   flex: 0 0 auto;
   min-height: 0;
-  overflow: hidden;
-  padding: 10px 14px 12px;
+  overflow: visible;
+  padding: 10px 14px 14px;
   gap: 8px;
   align-items: center;
 }
@@ -225,13 +225,32 @@ body.is-embed .aw-avatar {
 }
 
 body.is-embed .aw-row {
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   gap: 10px;
 }
 
-body.is-embed .aw-actions {
+body.is-embed .aw-row > div:first-child {
   display: flex;
-  flex: 1 1 auto;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+}
+
+body.is-embed .aw-balance-lbl {
+  margin: 0;
+}
+
+body.is-embed .aw-balance-val {
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+body.is-embed .aw-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
   gap: 8px;
   min-width: 0;
 }
@@ -241,7 +260,8 @@ body.is-embed .aw-feed {
 }
 
 body.is-embed .aw-tip {
-  flex: 1 1 0;
+  flex: none;
+  width: 100%;
   min-height: 44px;
   padding: 10px 12px;
   font-size: 0.8125rem;

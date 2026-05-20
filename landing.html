@@ -582,18 +582,18 @@
     .ep-live-iframe {
       position: relative; z-index: 1;
       display: block; width: 100%;
-      height: 700px;
-      min-height: 680px;
-      max-height: 820px;
+      height: 760px;
+      min-height: 720px;
+      max-height: 960px;
       border: 0;
       background: #0a0908;
       overflow: hidden;
     }
     @media (max-width: 920px) {
       .ep-live-iframe {
-        height: 680px;
-        min-height: 660px;
-        max-height: 800px;
+        height: 740px;
+        min-height: 700px;
+        max-height: 920px;
       }
     }
     @media (max-width: 560px) {
@@ -609,9 +609,9 @@
       }
       .ep-live-hint { display: none; }
       .ep-live-iframe {
-        height: 660px;
-        min-height: 640px;
-        max-height: 780px;
+        height: 720px;
+        min-height: 680px;
+        max-height: 900px;
       }
     }
     .ep-live-foot {
@@ -1799,7 +1799,7 @@
           </div>
         </div>
 
-        <p class="economics-demo-note">The live player credits <strong>+$0.024</strong> per play in the demo to show how the wallet feels — real rates depend on pools and listeners. <a href="player/index.html?showcase=1">Open full player →</a></p>
+        <p class="economics-demo-note" data-encore-demo-wallet="1"><strong>Sandbox wallet:</strong> Demo credits (+$0.024/play) illustrate UX only. Live Discovery Dividend and subscription pool rates publish at <a href="transparency/index.html">encore.audio/transparency</a> when pools are active.</p>
 
         <div class="economics-foot reveal">
           <strong>How Encore pays its bills:</strong> grants and listener donations — not by taxing artist sales or streaming payouts. Full model: <a href="https://github.com/jordanz00/encore/blob/main/ARTIST-INCOME-GUARANTEE.md">ARTIST-INCOME-GUARANTEE.md</a> · <a href="investor-deck.html">Deck</a>
@@ -2116,19 +2116,21 @@
       );
       els.forEach(function (el) { io.observe(el); });
     })();
-    /* Live player iframe — fit wallet + tip buttons (no inner scroll) */
+    /* Live player iframe — fit full wallet (balance + tips), no inner scroll */
     (function () {
       var iframe = document.querySelector('.ep-live-iframe');
       if (!iframe) return;
-      var applied = false;
+      var best = 0;
+      var lockAt = Date.now() + 1800;
       window.addEventListener('message', function (e) {
-        if (applied || !e.data || e.data.type !== 'encore-player-height') return;
-        var h = Math.ceil(Number(e.data.height) + 6);
-        if (!h || h < 520 || h > 820) return;
-        iframe.style.height = h + 'px';
-        iframe.style.minHeight = h + 'px';
-        iframe.style.maxHeight = h + 'px';
-        applied = true;
+        if (!e.data || e.data.type !== 'encore-player-height') return;
+        var h = Math.ceil(Number(e.data.height) + 8);
+        if (!h || h < 560 || h > 960) return;
+        if (Date.now() > lockAt && h < best) return;
+        best = Math.max(best, h);
+        iframe.style.height = best + 'px';
+        iframe.style.minHeight = best + 'px';
+        iframe.style.maxHeight = best + 'px';
       });
     })();
 

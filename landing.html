@@ -278,6 +278,21 @@
     .btn-secondary:hover { border-color: var(--ink); }
     .btn-lg { padding: 14px 26px; font-size: 1rem; }
 
+
+    .hero-beta-pill {
+      display: inline-block;
+      margin-bottom: var(--s-4);
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--encore);
+      background: var(--encore-soft);
+      border: 1px solid var(--encore-line);
+      border-radius: 999px;
+    }
     /* ---------- 1. HERO ---------- */
     .hero { padding: var(--s-9) 0 var(--s-7); }
     .hero-grid {
@@ -761,6 +776,182 @@
       font-weight: 600;
       color: var(--money);
       letter-spacing: 0.04em;
+    }
+
+
+    /* ---------- HOW IT WORKS (economics / transparency) ---------- */
+    .beta-strip {
+      margin-bottom: var(--s-6);
+      padding: var(--s-4) var(--s-5);
+      background: var(--encore-soft);
+      border: 1px solid var(--encore-line);
+      border-radius: var(--radius-lg);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+    }
+    .beta-strip strong { color: var(--encore); }
+    .earn-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s-5);
+      margin-top: var(--s-6);
+    }
+    @media (max-width: 720px) { .earn-compare { grid-template-columns: 1fr; } }
+    .earn-col {
+      padding: var(--s-5) var(--s-6);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line-strong);
+    }
+    .earn-col h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin: 0 0 var(--s-4);
+      letter-spacing: -0.02em;
+    }
+    .earn-col ul {
+      margin: 0;
+      padding-left: 1.15rem;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      color: var(--ink-muted);
+    }
+    .earn-col li { margin-bottom: var(--s-2); }
+    .earn-col--bad { background: var(--paper-2); }
+    .earn-col--bad h3 { color: var(--ink-muted); }
+    .earn-col--good {
+      background: var(--money-soft);
+      border-color: rgba(21, 128, 61, 0.25);
+    }
+    .earn-col--good h3 { color: var(--money); }
+    .earn-src {
+      margin: var(--s-4) 0 0;
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .economics-subhead {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: var(--s-8) 0 var(--s-4);
+      letter-spacing: -0.02em;
+    }
+    .income-grid--simple .income-card .fee { display: none; }
+    .income-grid--simple .income-card p { margin-bottom: 0; }
+
+
+    .economics-band {
+      background: var(--paper);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .income-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--s-4);
+      margin-top: var(--s-6);
+    }
+    @media (max-width: 900px) { .income-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .income-grid { grid-template-columns: 1fr; } }
+    .income-card {
+      background: var(--paper-2);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-lg);
+      padding: var(--s-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-2);
+    }
+    .income-card .num {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--encore);
+      font-weight: 600;
+    }
+    .income-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .income-card p { margin: 0; font-size: 0.875rem; line-height: 1.45; color: var(--ink-muted); }
+    .income-card .fee {
+      margin-top: auto;
+      padding-top: var(--s-3);
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--money);
+      font-weight: 600;
+    }
+    .income-card .fee.has-fee { color: var(--ink-dim); }
+    .flow-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s-5);
+      margin-top: var(--s-7);
+    }
+    @media (max-width: 720px) { .flow-panels { grid-template-columns: 1fr; } }
+    .flow-panel {
+      background: var(--paper-2);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-lg);
+      padding: var(--s-5);
+    }
+    .flow-panel h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      margin: 0 0 var(--s-4);
+      letter-spacing: -0.02em;
+    }
+    .flow-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--s-3);
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--line-strong);
+      font-size: 0.875rem;
+      color: var(--ink-muted);
+    }
+    .flow-line:last-child {
+      border-bottom: none;
+      font-weight: 600;
+      color: var(--ink);
+      padding-top: var(--s-3);
+    }
+    .flow-line .amt {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      color: var(--ink-soft);
+      flex-shrink: 0;
+    }
+    .flow-line:last-child .amt { color: var(--money); font-size: 1rem; }
+    .flow-line.deduct .amt { color: var(--encore); }
+    .economics-foot {
+      margin-top: var(--s-6);
+      padding: var(--s-5) var(--s-6);
+      background: var(--ink);
+      color: rgba(250, 246, 236, 0.88);
+      border-radius: var(--radius-lg);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+    .economics-foot strong { color: var(--paper); }
+    .economics-foot a { color: var(--encore); font-weight: 500; }
+    .economics-demo-note {
+      margin-top: var(--s-5);
+      font-size: 0.8125rem;
+      color: var(--ink-dim);
+      font-family: var(--font-mono);
     }
 
     /* ---------- 4. THE MATH (comparison + $10 album) ---------- */
@@ -1295,6 +1486,7 @@
       <nav class="primary" aria-label="Primary">
         <a href="#thesis">Thesis</a>
         <a href="#product">Product</a>
+        <a href="#economics">How it works</a>
         <a href="#math">The math</a>
         <a href="#payoff">$9.71</a>
         <a href="#loop">Why this wins</a>
@@ -1322,7 +1514,8 @@
               <span class="hl">the way artists would have built it.</span>
             </h1>
             <p class="hero-sub">
-              A <strong>$28.6B</strong> industry still pays artists <strong>$0.003</strong> per stream. Encore is the working counter-proposal: real-time Artist Wallet, <strong>0% platform fee</strong> on tips and sales, AGPL + foundation ownership.
+              <span class="hero-beta-pill">Public beta — player works today</span>
+              Artists lose on streaming. Encore pays from <strong>six income streams</strong>, keeps <strong>$9.71 on a $10 sale</strong>, and charges <strong>0% platform fee</strong> on sales, tips, and listener pools.
             </p>
             <div class="hero-metrics">
               <div class="hero-metric"><span class="hero-metric-val encore num">8×</span><span class="hero-metric-lbl">Illustrative per-play vs Spotify ($0.024 vs $0.003 demo)</span></div>
@@ -1431,7 +1624,7 @@
           <span class="eyebrow">What Encore does</span>
           <h2>Built for artists. <em>Built to last.</em></h2>
           <p class="lead">
-            Three things no incumbent offers together: money in the player, lossless for everyone, and infrastructure artists actually own.
+            A go-to-market-ready player (try it above): drag in your files, queue tracks, keyboard shortcuts — plus money in the wallet, lossless audio, and infrastructure artists own.
           </p>
         </div>
         <div class="features-grid">
@@ -1462,6 +1655,75 @@
             <p>ActivityPub federation. AGPL-3.0 source. Non-profit foundation. Founding texts bar using profits for weapons, war, or military tech. Own your audience — export it, move instances, keep your followers.</p>
             <span class="feature-tag">AGPL-3.0 · ActivityPub</span>
           </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== HOW IT WORKS (economics) ==================== -->
+    <section class="economics-band" id="economics">
+      <div class="container">
+        <p class="beta-strip reveal"><strong>Public beta.</strong> The player below is a real, working app — play music, queue tracks, tip the demo artist. Subscription payouts and card processing roll out as we launch; the rules here are how money moves once fans are on the platform.</p>
+
+        <div class="section-head">
+          <span class="eyebrow">How it works</span>
+          <h2>Why musicians earn <em>significantly more</em> on Encore</h2>
+          <p class="lead">Big platforms pay fractions of a cent per stream and take a cut of sales. Encore sends fan money to artists first — with zero platform fee on sales, tips, and streaming pools.</p>
+        </div>
+
+        <div class="earn-compare reveal">
+          <div class="earn-col earn-col--bad">
+            <h3>Spotify-style streaming</h3>
+            <ul>
+              <li>About <strong>$0.003</strong> per play (industry average)</li>
+              <li>Roughly <strong>3,500 plays</strong> to equal one <strong>$10</strong> album sale</li>
+              <li>Most tracks earn <strong>$0</strong> under the 1,000-play rule</li>
+            </ul>
+            <p class="earn-src">Benchmark: Loud &amp; Clear 2024</p>
+          </div>
+          <div class="earn-col earn-col--good">
+            <h3>Encore</h3>
+            <ul>
+              <li><strong>$9.71</strong> kept on a <strong>$10</strong> album (only card processing, no platform tax)</li>
+              <li><strong>Every play</strong> can earn — no stream minimum</li>
+              <li><strong>Six income streams</strong> — not just streaming</li>
+            </ul>
+            <p class="earn-src">0% Encore fee on sales, tips &amp; pool payouts</p>
+          </div>
+        </div>
+
+        <h3 class="economics-subhead reveal">Six ways artists get paid</h3>
+        <div class="income-grid income-grid--simple">
+          <article class="income-card reveal"><span class="num">1</span><h3>Sell music</h3><p>Fans buy albums and singles. You keep the price minus card fees only.</p></article>
+          <article class="income-card reveal"><span class="num">2</span><h3>Tips</h3><p>Fans tip or subscribe to you directly. 100% to you minus processing.</p></article>
+          <article class="income-card reveal"><span class="num">3</span><h3>Listener subscriptions</h3><p>~70% of each fan's subscription goes to artists <em>they actually listened to</em> — not a mega-star pool.</p></article>
+          <article class="income-card reveal"><span class="num">4</span><h3>Discovery pool</h3><p>10% of subscription money + ad revenue split by play — so even small artists get paid when they're heard.</p></article>
+          <article class="income-card reveal"><span class="num">5</span><h3>Licensing</h3><p>Films, podcasts, and games license your tracks (opt-in). You keep 85%.</p></article>
+          <article class="income-card reveal"><span class="num">6</span><h3>Shows &amp; merch</h3><p>Tickets and merch through partners. Encore does not take a cut.</p></article>
+        </div>
+
+        <div class="flow-panels">
+          <div class="flow-panel reveal">
+            <h3>$10 album — every line item</h3>
+            <div class="flow-line"><span>Fan pays</span><span class="amt">$10.00</span></div>
+            <div class="flow-line deduct"><span>Card processing (~2.9% + $0.30)</span><span class="amt">−$0.29</span></div>
+            <div class="flow-line deduct"><span>Encore platform fee</span><span class="amt">−$0.00</span></div>
+            <div class="flow-line"><span>You keep</span><span class="amt">$9.71</span></div>
+          </div>
+          <div class="flow-panel reveal">
+            <h3>$9.99/month listener plan — where it goes</h3>
+            <div class="flow-line"><span>Fan pays</span><span class="amt">$9.99</span></div>
+            <div class="flow-line deduct"><span>Card processing</span><span class="amt">−$0.59</span></div>
+            <div class="flow-line"><span>Discovery pool (every play)</span><span class="amt">$1.00</span></div>
+            <div class="flow-line"><span>Artists that fan listened to (~70%)</span><span class="amt">$6.58</span></div>
+            <div class="flow-line"><span>Running the service</span><span class="amt">~$1.82</span></div>
+          </div>
+        </div>
+
+        <p class="economics-demo-note">The live player credits <strong>+$0.024</strong> per play in the demo to show how the wallet feels — real rates depend on pools and listeners. <a href="player/index.html?showcase=1">Open full player →</a></p>
+
+        <div class="economics-foot reveal">
+          <strong>How Encore pays its bills:</strong> grants and listener donations — not by taxing artist sales or streaming payouts. Full model: <a href="https://github.com/jordanz00/encore/blob/main/ARTIST-INCOME-GUARANTEE.md">ARTIST-INCOME-GUARANTEE.md</a> · <a href="investor-deck.html">Deck</a>
         </div>
       </div>
     </section>
@@ -1730,7 +1992,7 @@
       </div>
       <div class="footer-bottom">
         <span>© 2026 Encore Foundation · Public-good non-profit · 501(c)(3) pending</span>
-        <span>Status: pre-launch · beta in <span id="footer-days">30</span> days</span>
+        <span>Status: public beta · <span id="footer-days">30</span> days</span>
       </div>
     </div>
   </footer>

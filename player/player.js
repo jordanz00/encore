@@ -5,6 +5,8 @@
   const IS_SHOWCASE = params.get('showcase') === '1' || params.get('embed') === '1';
   const IS_EMBED = params.get('embed') === '1';
 
+  const AUDIO_EXT_RE = /\.(mp3|flac|wav|ogg|oga|opus|m4a|aac|aiff|aif|webm|weba|mp4|m4b)$/i;
+
   const ECON = { perPlay: 0.024, album: 9.71 };
 
   const DEMO_MP3 = 'demo/complicated.mp3';
@@ -70,6 +72,8 @@
     playSpinner: $('#play-spinner'),
     appRoot: $('#app-root'),
     statusPill: $('#status-pill'),
+    dropOverlay: $('#drop-overlay'),
+    openInline: $('#btn-open-inline'),
   };
 
   let queue = [];
@@ -103,7 +107,7 @@
     if (code === 1) return 'Playback aborted';
     if (code === 2) return 'Network error — use a local server (see README)';
     if (code === 3) return 'Decode error — file may be corrupt';
-    if (code === 4) return 'Format not supported';
+    if (code === 4) return 'Format not supported in this browser — try MP3, WAV, or OGG';
     return 'Could not load audio file';
   }
 
@@ -163,8 +167,8 @@
     const pct = Math.round(audio.volume * 100);
     if (el.volume) el.volume.value = String(pct);
     if (el.mute) {
-      el.mute.textContent = audio.muted || audio.volume === 0 ? '⊘' : '♪';
-      el.mute.setAttribute('aria-label', audio.muted ? 'Unmute' : 'Mute');
+      el.mute.classList.toggle('is-muted', audio.muted || audio.volume === 0);
+      el.mute.setAttribute('aria-label', audio.muted || audio.volume === 0 ? 'Unmute' : 'Mute');
     }
   }
 
@@ -390,6 +394,7 @@
     updateTitleMarquee();
     walletRender();
     updateStatusPill();
+    updateMediaSession(t);
   }
 
   function revokeUrls() {
@@ -834,6 +839,7 @@
       setBuffering(false);
       document.body.classList.add('is-playing');
       creditPlay(t);
+      updateMediaSession(t);
     } catch (e) {
       setBuffering(false);
       document.body.classList.remove('is-playing');
@@ -861,10 +867,53 @@
     notifyEmbedHeight();
   }
 
+  function isAudioFile(f) {
+    if (!f) return false;
+    if (f.type && f.type.startsWith('audio/')) return true;
+    return AUDIO_EXT_RE.test(f.name || '');
+  }
+
+  function updateMediaSession(t) {
+    if (!('mediaSession' in navigator)) return;
+    const track = t || currentTrack();
+    if (!track) return;
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: track.title || 'Untitled',
+      artist: track.artist || 'Unknown',
+      album: track.album || 'Encore',
+      artwork: (function () {
+        let artSrc = '';
+        if (track.cover) {
+          artSrc = track.cover.startsWith('http') || track.cover.startsWith('blob:')
+            ? track.cover : assetUrl(track.cover);
+        } else if (el.artImg && el.artImg.src && !el.artImg.hidden) {
+          artSrc = el.artImg.src;
+        }
+        return artSrc ? [{ src: artSrc, sizes: '512x512', type: 'image/png' }] : [];
+      })(),
+    });
+    navigator.mediaSession.playbackState = audio.paused ? 'paused' : 'playing';
+  }
+
+  function bindMediaSessionActions() {
+    if (!('mediaSession' in navigator)) return;
+    const acts = {
+      play: () => el.play.click(),
+      pause: () => { if (!audio.paused) el.play.click(); },
+      previoustrack: () => el.prev.click(),
+      nexttrack: () => el.next.click(),
+      seekbackward: () => seekRelative(-10),
+      seekforward: () => seekRelative(10),
+    };
+    Object.keys(acts).forEach((k) => {
+      try { navigator.mediaSession.setActionHandler(k, acts[k]); } catch (_) { /* unsupported */ }
+    });
+  }
+
   function addFiles(files) {
     const added = [];
     for (const f of files) {
-      if (!f.type.startsWith('audio/') && !/\.(aiff|aif|mp3|flac|wav|ogg|m4a)$/i.test(f.name)) continue;
+      if (!isAudioFile(f)) continue;
       const base = f.name.replace(/\.[^.]+$/, '');
       const parts = base.split(' - ');
       const track = {
@@ -878,9 +927,10 @@
       added.push(track);
     }
     if (!added.length) {
-      toast('No supported audio files selected');
+      toast('No supported audio — try MP3, FLAC, WAV, OGG, M4A, or AIFF');
       return;
     }
+    toast('Added ' + added.length + ' track' + (added.length === 1 ? '' : 's'));
     playAt(queue.length - 1);
     renderQueue();
   }
@@ -1111,6 +1161,37 @@
   if (IS_SHOWCASE) document.body.classList.add('is-showcase');
   if (IS_EMBED) document.body.classList.add('is-embed');
 
+
+  function setDragActive(on) {
+    document.body.classList.toggle('is-dragover', on);
+    if (el.dropOverlay) {
+      el.dropOverlay.hidden = !on;
+      el.dropOverlay.setAttribute('aria-hidden', on ? 'false' : 'true');
+    }
+  }
+
+  let dragDepth = 0;
+  ['dragenter', 'dragover'].forEach((ev) => {
+    document.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dragDepth++;
+      setDragActive(true);
+    });
+  });
+  document.addEventListener('dragleave', () => {
+    dragDepth = Math.max(0, dragDepth - 1);
+    if (dragDepth === 0) setDragActive(false);
+  });
+  document.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dragDepth = 0;
+    setDragActive(false);
+    const files = Array.from(e.dataTransfer?.files || []);
+    if (files.length) addFiles(files);
+  });
+
+  if (el.openInline) el.openInline.addEventListener('click', () => el.file.click());
+
   loadPrefs();
   updateVolumeUI();
   updateRepeatUI();
@@ -1143,6 +1224,7 @@
 
   walletRender();
   bindWaveformInteraction();
+  bindMediaSessionActions();
   drawViz();
   if (IS_SHOWCASE || IS_EMBED) loadDemo(false);
   else renderQueue();

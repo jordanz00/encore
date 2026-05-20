@@ -6,8 +6,8 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Encore Player</title>
-  <meta name="description" content="Encore showcase player — local files, Artist Wallet demo." />
+  <title>Encore Player — public beta</title>
+  <meta name="description" content="Encore media player — public beta. Play local audio, queue tracks, Artist Wallet demo. MP3, FLAC, WAV, OGG, M4A, AIFF." />
   <meta name="theme-color" content="#0a0908" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,12 +17,18 @@
   <link rel="stylesheet" href="apple-player.css" />
 </head>
 <body>
+  <div class="drop-overlay" id="drop-overlay" hidden aria-hidden="true">
+    <div class="drop-overlay-inner">
+      <p class="drop-title">Drop audio to play</p>
+      <p class="drop-formats">MP3 · FLAC · WAV · OGG · M4A · AAC · AIFF · OPUS · WebM</p>
+    </div>
+  </div>
   <div class="app" id="app-root">
     <header class="topbar">
-      <a class="brand" href="../landing.html" target="_top">Encore</a>
+      <a class="brand" href="../landing.html" target="_top">Encore <span class="beta-pill">Beta</span></a>
       <div class="top-actions">
-        <button type="button" class="btn" id="btn-add">Add file</button>
-        <input type="file" id="file-input" accept="audio/*,.aiff,.aif,.mp3,.flac,.wav,.ogg,.m4a" multiple hidden />
+        <button type="button" class="btn btn-primary-action" id="btn-add">Open audio</button>
+        <input type="file" id="file-input" accept="audio/*,.mp3,.flac,.wav,.ogg,.oga,.opus,.m4a,.aac,.aiff,.aif,.webm,.weba" multiple hidden />
         <button type="button" class="btn btn-ghost" id="btn-fullscreen" hidden aria-label="Fullscreen">⛶</button>
         <details class="top-more">
           <summary class="btn btn-ghost" aria-label="More">···</summary>
@@ -54,7 +60,7 @@
         </div>
 
         <div class="playback-stack">
-          <p class="viz-hint">Drag waveform to seek</p>
+          <p class="viz-hint">Drag files anywhere · drag waveform to seek · <button type="button" class="viz-hint-link" id="btn-open-inline">open audio</button></p>
           <canvas class="viz" id="viz" role="slider" aria-label="Waveform — tap or drag to seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"></canvas>
           <div class="seek seek--thin" id="seek" aria-hidden="true"><div class="seek-fill" id="seek-fill"></div></div>
           <div class="seek-times">
@@ -80,7 +86,7 @@
             <button type="button" class="ptool ptool-skip" id="btn-skip-back" aria-label="Back 10 seconds">−10s</button>
             <button type="button" class="ptool ptool-skip" id="btn-skip-fwd" aria-label="Forward 10 seconds">+10s</button>
             <label class="volume-block" aria-label="Volume">
-              <button type="button" class="ptool" id="btn-mute" aria-label="Mute" title="Mute (M)">Vol</button>
+              <button type="button" class="ptool" id="btn-mute" aria-label="Mute" title="Mute (M)"><svg class="vol-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path class="vol-waves" d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a9 9 0 010 12.14"/></svg></button>
               <input type="range" class="volume-slider" id="volume" min="0" max="100" value="100" />
             </label>
             <label class="speed-block">
@@ -119,7 +125,7 @@
           </div>
           <div class="aw-this">
             <span class="aw-label">This play</span>
-            <span class="aw-amt" id="aw-this-play">+ $0.02</span>
+            <span class="aw-amt" id="aw-this-play">+ $0.024</span>
           </div>
         </div>
         <div class="aw-row">
@@ -152,6 +158,7 @@
           <li><kbd>N</kbd> Next · <kbd>P</kbd> Previous</li>
           <li><kbd>S</kbd> Shuffle · <kbd>R</kbd> Repeat</li>
           <li><kbd>Q</kbd> Queue · <kbd>F</kbd> Fullscreen</li>
+          <li>Drag &amp; drop files anywhere to queue</li>
         </ul>
       </div>
     </dialog>

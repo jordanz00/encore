@@ -169,6 +169,8 @@
       color: var(--ink);
       text-decoration: none;
       font-family: var(--font-display);
+      flex: 1 1 auto;
+      min-width: 0;
     }
     .brand-mark { width: 28px; height: 28px; flex: 0 0 28px; }
     nav.primary { display: flex; align-items: center; gap: var(--s-6); }
@@ -180,6 +182,79 @@
     }
     nav.primary a:hover { color: var(--ink); }
     @media (max-width: 880px) { nav.primary { display: none; } }
+
+    /* Nav CTAs — one visible label per link; no overlap */
+    .nav-cta-short,
+    .nav-deck-short { display: none; }
+    .nav-cta-group {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      gap: 10px;
+      flex: 0 0 auto;
+      margin-left: auto;
+    }
+    .nav-cta-group > a {
+      flex: 0 0 auto;
+      box-sizing: border-box;
+    }
+    .nav-cta-group .btn {
+      padding: 8px 14px;
+      font-size: 0.8125rem;
+      min-height: 38px;
+      line-height: 1.2;
+    }
+    .nav-cta-ghost {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      text-decoration: none;
+      padding: 8px 12px;
+      min-height: 38px;
+      line-height: 1.2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+      border: 1px solid var(--line-strong);
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+    .nav-cta-ghost:hover { color: var(--ink); border-color: var(--ink); }
+    @media (max-width: 880px) {
+      .nav-inner { gap: 12px; }
+      .nav-cta-long,
+      .nav-deck-long { display: none !important; }
+      .nav-cta-short,
+      .nav-deck-short { display: inline !important; }
+      .nav-cta-group { gap: 8px; }
+      .nav-cta-group .btn,
+      .nav-cta-ghost {
+        padding: 7px 11px;
+        font-size: 0.75rem;
+        min-height: 36px;
+      }
+    }
+    @media (max-width: 420px) {
+      header.nav { height: auto; min-height: var(--nav-h); }
+      .nav-inner {
+        flex-wrap: wrap;
+        height: auto;
+        min-height: var(--nav-h);
+        padding-top: 10px;
+        padding-bottom: 10px;
+        row-gap: 8px;
+      }
+      .brand { font-size: 0.9375rem; flex: 1 1 auto; min-width: 0; }
+      .brand-mark { width: 24px; height: 24px; flex: 0 0 24px; }
+      .nav-cta-group {
+        width: 100%;
+        margin-left: 0;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+    }
+
 
     /* Buttons */
     .btn {
@@ -528,15 +603,6 @@
       color: rgba(250, 246, 236, 0.92);
     }
     .exec-moment blockquote em { color: var(--encore); font-style: italic; }
-    .nav-cta-group { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .nav-cta-ghost {
-      font-size: 0.8125rem; font-weight: 500;
-      color: var(--ink-muted); text-decoration: none;
-      padding: 9px 14px; border-radius: var(--radius);
-      border: 1px solid var(--line-strong);
-      white-space: nowrap;
-    }
-    .nav-cta-ghost:hover { color: var(--ink); border-color: var(--ink); }
 
     /* ---------- 2. THESIS (one shocking stat + supporting data) ---------- */
     .thesis {
@@ -1234,8 +1300,8 @@
         <a href="#loop">Why this wins</a>
       </nav>
       <div class="nav-cta-group">
-        <a href="mailto:invest@encore.audio?subject=Encore%20investor%20briefing" class="nav-cta-ghost">Request briefing</a>
-        <a href="investor-deck.html" class="btn btn-primary">Investor deck</a>
+        <a href="mailto:invest@encore.audio?subject=Encore%20investor%20briefing" class="nav-cta-ghost"><span class="nav-cta-long">Request briefing</span><span class="nav-cta-short">Briefing</span></a>
+        <a href="investor-deck.html" class="btn btn-primary"><span class="nav-deck-long">Investor deck</span><span class="nav-deck-short">Deck</span></a>
       </div>
     </div>
   </header>

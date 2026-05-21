@@ -570,6 +570,7 @@ body.landing {
   background: #fff;
   border-radius: var(--radius);
   border: 1px solid var(--line);
+  text-align: center;
   transition: transform 0.35s var(--ease-spring);
 }
 .landing-feature-card:hover { transform: translateY(-4px); }
@@ -582,7 +583,7 @@ body.landing {
   align-items: center;
   justify-content: center;
   font-size: 1.25rem;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
 }
 .landing-feature-card h3 { font-size: 1.2rem; margin-bottom: 0.35rem; }
 .landing-feature-card p {
